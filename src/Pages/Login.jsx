@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom'
 import "../Style/Login.css"
 import Footer from '../Component/Footer'
 import Navbar from '../Component/Navbar'
+import axios from 'axios'
+import apiConst from '../GlobalConst/ApiKeys'
 
 const Login = () => {
 
@@ -11,11 +13,10 @@ const Login = () => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, []);
 
-  //-------------------OTP Varifications------------------
-
+  const [showOtpInput, setShowOtpInput] = useState(false);
   const [otp, setOtp] = useState(['', '', '', '']);
 
-  const inputRefs = useRef([]);
+  //------------------ Verify OTP --------------------- 
 
   const handleChange = (e, index) => {
     const value = e.target.value;
@@ -45,12 +46,46 @@ const Login = () => {
     setOtp(newOtp);
   };
 
-  const [showOtpInput, setShowOtpInput] = useState(false);
+  //------------------ Verify OTP --------------------- 
 
-  const handleSendOtp = (e) => {
-    e.preventDefault();
+  //------------------ Send OTP --------------------- 
+
+  const handleSubmit = (e) => {
     setShowOtpInput(true);
+    e.preventDefault();
+
+    var data = JSON.stringify({
+      "mobile": mobile
+    });
+    console.log(data);
+
+    var config = {
+      method: 'post',
+      maxBodyLength: Infinity,
+      url: apiConst.send_otp_login,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: data
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(response);
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
+
+  //------------------ Send OTP --------------------- 
+
+
+  //-------------------OTP Varifications------------------
+
+
+  const inputRefs = useRef([]);
 
   const [mobile, setmobile] = useState();
 
@@ -60,14 +95,43 @@ const Login = () => {
 
   const VerifyOtp = (e) => {
     e.preventDefault();
-    console.log(mobile, otp.join(''))
-    SetToken()
+    console.log(mobile, otp)
+    const okOtp = otp.join('')
+
+    const data = {
+      mobile: mobile,
+      otp: okOtp
+    };
+
+    console.log(data);
+
+    var config = {
+      method: 'post',
+      maxBodyLength: Infinity,
+      url: apiConst.login,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: data
+    };
+
+    axios(config)
+      .then((response) => {
+        console.log(response.data.message);
+        console.log(response.data);
+        if (response.data.authtoken) {
+          localStorage.setItem('User_token', response.data.authtoken);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
-  const SetToken = () => {
-    localStorage.setItem('token', '<PASSWORD>')
-    window.location.href = '/filter'
-  }
+  // const SetToken = () => {
+  //   localStorage.setItem('token', response)
+  //   // window.location.href = '/filter'
+  // }
 
   function handleKeyDown(event) {
     const maxLength = 10;
@@ -94,11 +158,11 @@ const Login = () => {
       <Navbar />
       <div className="container123">
         <div className='logo1234'>
-          <img src={require('../Assets/R.png')} alt=""/>
+          <img src={require('../Assets/R.png')} alt="" />
         </div>
 
         <div className='form-width '>
-          <form className='form' onSubmit={handleSendOtp}>
+          <form className='form' onSubmit={handleSubmit}>
             <div>
               <input
                 className='txt-mo'

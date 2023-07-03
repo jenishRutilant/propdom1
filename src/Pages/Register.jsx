@@ -12,7 +12,7 @@ function Register() {
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     }, []);
 
-    const [showOtpInput, setShowOtpInput] = useState(false);
+    const [showOtpInput, setShowOtpInput] = useState(true);
     const [mobile, setmobile] = useState();
     const [email, setEmail] = useState();
     const [name, setName] = useState();
@@ -67,7 +67,7 @@ function Register() {
             maxBodyLength: Infinity,
             url: apiConst.send_otp_to_user_register,
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
             data: data
         };
@@ -123,9 +123,9 @@ function Register() {
 
         axios(config)
             .then((response) => {
+                console.log(response.data.message);
                 if (response.data.authtoken) {
-                    console.log(response);
-                    localStorage.setItem('User_token', response.data.data.message);
+                    localStorage.setItem('User_token', response.data.authtoken);
                 }
             })
             .catch((error) => {
