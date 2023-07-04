@@ -11,6 +11,7 @@ const apiConst = {
   login: `${BASE_URL}user/login`,
   send_otp_login: `${BASE_URL}user/send_otp_to_user_for_login`,
   add_complain: `${BASE_URL}complain/add`,
+  getallplans: `${BASE_URL}plans/getallplans`,
 };
 
 export default apiConst;

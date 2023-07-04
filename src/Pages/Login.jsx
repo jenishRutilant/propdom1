@@ -121,10 +121,12 @@ const Login = () => {
         console.log(response.data);
         if (response.data.authtoken) {
           localStorage.setItem('User_token', response.data.authtoken);
+          alert('Login successful')
         }
       })
       .catch((error) => {
         console.log(error);
+        alert('Login failed');
       });
   }
 
@@ -132,7 +134,6 @@ const Login = () => {
   //   localStorage.setItem('token', response)
   //   // window.location.href = '/filter'
   // }
-
   function handleKeyDown(event) {
     const maxLength = 10;
     const inputValue = event.target.value;

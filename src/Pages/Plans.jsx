@@ -1,13 +1,40 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../Component/Navbar";
 import "../Style/Plans.css";
 import Footer from "../Component/Footer";
+import axios from "axios"
 
 const Plans = () => {
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    allThePlans();
   }, []);
+
+  const [allPlans, setAllPlans] = useState();
+  const [allPlans1, setAllPlans1] = useState();
+  const [allPlans2, setAllPlans2] = useState();
+
+  const allThePlans = () => {
+    var config = {
+      method: 'get',
+      maxBodyLength: Infinity,
+      url: 'http://localhost:5000/plans/getallplans',
+      headers: {
+        'authToken_user': localStorage.getItem('User_token'),
+      }
+    };
+
+    axios(config)
+      .then(function (response) {
+        setAllPlans(response.data.getPlans[0]);
+        setAllPlans1(response.data.getPlans[1]);
+        setAllPlans2(response.data.getPlans[2]);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
 
   return (
     <>
@@ -16,20 +43,21 @@ const Plans = () => {
         {" "}
         <section>
           <div className="cards_section container-fluid">
+
             <div className="card">
               <div className="card_top">
                 <div className="listing-badges">
                   <span className="featured">Featured</span>
                 </div>
-                <p>Gold</p>
-                <h1>₹ 3999.00</h1>
+                <p>{allPlans?.name}</p>
+                <h1>₹{allPlans?.sale_price}.00</h1>
               </div>
               <div className="card_bottom">
-                <p>Validity : 180 Days</p> <hr />
-                <p> Sale Price : ₹ 3999</p> <hr />
-                <p>GST : ₹ 720</p> <hr />
+                <p>Validity : {allPlans?.package_validity}</p> <hr />
+                <p> Sale Price : ₹{allPlans?.sale_price}</p> <hr />
+                <p>GST : ₹ {allPlans?.Gst_price}</p> <hr />
                 <p>
-                  <b>Total Amount : ₹ 4719</b>
+                  <b>Total Amount : ₹ {allPlans?.total_amount}</b>
                 </p>
                 <hr />
                 <p>Top Broker : No</p> <hr />
@@ -39,55 +67,59 @@ const Plans = () => {
               </div>
               <button>BUY NOW</button>
             </div>
+
             <div className="card">
               <div className="card_top">
                 <div className="listing-badges">
                   <span className="featured">Featured</span>
                 </div>
-                <p>Diamond</p>
-                <h1>₹ 6999.00</h1>
+                <p>{allPlans1?.name}</p>
+                <h1>₹{allPlans1?.sale_price}.00</h1>
               </div>
               <div className="card_bottom">
-                <p>Validity : 360 Days</p> <hr />
-                <p> Sale Price : ₹ 6999 </p> <hr />
-                <p>GST : ₹ 1260</p> <hr />
+                <p>Validity : {allPlans1?.package_validity}</p> <hr />
+                <p> Sale Price : ₹{allPlans1?.sale_price}</p> <hr />
+                <p>GST : ₹ {allPlans1?.Gst_price}</p> <hr />
                 <p>
-                  <b>Total Amount : ₹ 8259</b>
+                  <b>Total Amount : ₹ {allPlans1?.total_amount}</b>
                 </p>
                 <hr />
                 <p>Top Broker : No</p> <hr />
-                <p>Can Request For Property : Yes</p> <hr />
+                <p>Can Request For Property : No</p> <hr />
                 <p>Has Profile : Yes</p> <hr />
                 <p>Live Property View : No</p> <hr />
               </div>
               <button>BUY NOW</button>
             </div>
+
             <div className="card">
               <div className="card_top">
                 <div className="listing-badges">
                   <span className="featured">Featured</span>
                 </div>
-                <p>Platinum</p>
-                <h1>₹ 12999.00</h1>
+                <p>{allPlans2?.name}</p>
+                <h1>₹{allPlans2?.sale_price}.00</h1>
               </div>
               <div className="card_bottom">
-                <p>Validity : 360 Days</p> <hr />
-                <p> Sale Price : ₹ 12999 </p> <hr />
-                <p>GST : ₹ 2340</p> <hr />
+                <p>Validity : {allPlans2?.package_validity}</p> <hr />
+                <p> Sale Price : ₹{allPlans2?.sale_price}</p> <hr />
+                <p>GST : ₹ {allPlans2?.Gst_price}</p> <hr />
                 <p>
-                  <b> Total Amount : ₹ 15339</b>
+                  <b>Total Amount : ₹ {allPlans2?.total_amount}</b>
                 </p>
                 <hr />
-                <p>Top Broker : Yes</p> <hr />
-                <p>Can Request For Property : Yes</p> <hr />
+                <p>Top Broker : No</p> <hr />
+                <p>Can Request For Property : No</p> <hr />
                 <p>Has Profile : Yes</p> <hr />
-                <p>Live Property View : Yes</p> <hr />
+                <p>Live Property View : No</p> <hr />
               </div>
               <button>BUY NOW</button>
             </div>
+
+
           </div>
         </section>
-      </div>
+      </div >
       <Footer />
     </>
   );

@@ -5,8 +5,11 @@ import Footer from '../Component/Footer'
 import Navbar from '../Component/Navbar'
 import apiConst from "../GlobalConst/ApiKeys"
 import axios from 'axios';
+import {useNavigate} from "react-router-dom"
 
 function Register() {
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -126,10 +129,13 @@ function Register() {
                 console.log(response.data.message);
                 if (response.data.authtoken) {
                     localStorage.setItem('User_token', response.data.authtoken);
+                    alert('Register done!')
+                    navigate('/login');
                 }
             })
             .catch((error) => {
                 console.log(error);
+                alert('Something went wrong');
             });
         //-----api--------
     }
