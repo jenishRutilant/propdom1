@@ -12,7 +12,7 @@ function Register() {
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     }, []);
 
-    const [showOtpInput, setShowOtpInput] = useState(true);
+    const [showOtpInput, setShowOtpInput] = useState(false);
     const [mobile, setmobile] = useState();
     const [email, setEmail] = useState();
     const [name, setName] = useState();
