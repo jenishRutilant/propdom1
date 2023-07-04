@@ -52,6 +52,16 @@ const CustomerService = () => {
         console.log(error);
       });
   }
+
+  function handleKeyDown(event) {
+    const maxLength = 10;
+    const inputValue = event.target.value;
+
+    if (inputValue.length >= maxLength && event.key !== 'Backspace') {
+      event.preventDefault();
+    }
+  }
+
   return (
     <>
       <Navbar />
@@ -64,7 +74,7 @@ const CustomerService = () => {
             </div>
             <div className="second_input">
               <input type="text" placeholder="Subject" name="subject" onChange={onChange} />
-              <input type="number" placeholder="Mobile" name="mobaileNumber" onChange={onChange} />
+              <input type="number" placeholder="Mobile" name="mobaileNumber" onChange={onChange} onKeyDown={handleKeyDown}/>
             </div>
             <div className="message">
               <textarea

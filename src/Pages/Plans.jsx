@@ -37,7 +37,7 @@ const Plans = () => {
                 <p>Has Profile : Yes</p> <hr />
                 <p>Live Property View : No</p> <hr />
               </div>
-              <button>BUT NOW</button>
+              <button>BUY NOW</button>
             </div>
             <div className="card">
               <div className="card_top">
@@ -60,7 +60,7 @@ const Plans = () => {
                 <p>Has Profile : Yes</p> <hr />
                 <p>Live Property View : No</p> <hr />
               </div>
-              <button>BUT NOW</button>
+              <button>BUY NOW</button>
             </div>
             <div className="card">
               <div className="card_top">
@@ -83,7 +83,7 @@ const Plans = () => {
                 <p>Has Profile : Yes</p> <hr />
                 <p>Live Property View : Yes</p> <hr />
               </div>
-              <button>BUT NOW</button>
+              <button>BUY NOW</button>
             </div>
           </div>
         </section>
