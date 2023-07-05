@@ -13,6 +13,7 @@ const apiConst = {
   add_complain: `${BASE_URL}complain/add`,
   getallplans: `${BASE_URL}plans/getallplans`,
   list: `${BASE_URL}category/list`,
+  pro_list: `${BASE_URL}property/list`
 };
 
 export default apiConst;

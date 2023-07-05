@@ -4,13 +4,18 @@ import '../Style/Filter.css'
 import Navbar2 from '../Component/Navbar2'
 import Footer from '../Component/Footer'
 import PropertyCard from '../Pages/Property';
+import MultiRangeSlider from '../Pages/MultiRangeSlider'
 
 function Filter() {
-
-
+    const [min1, setmin] = useState(1);
+    const [max1, setmax] = useState();
+    const [min2, setmin2] = useState();
+    const [max2, setmax2] = useState();
+    // const [value, setvalue] = useState({ min1: '1', max1: '2' })
     useEffect(() => {
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     }, []);
+
 
     const [currentPage, setCurrentPage] = useState(1);
     const [propertiesPerPage] = useState(10); // Number of properties to display per page
@@ -197,6 +202,36 @@ function Filter() {
             superBuiltUpArea: '307.69 Super built-up Area',
             photo: require('../Assets/second.jpeg')
         },
+        {
+            id: 19,
+            location: 'sector 42 gurugram',
+            name: 'adani m2k oyster grande',
+            price: '18.80 Lac',
+            pricePerSqft: '3312.00/sq/ft.',
+            size: '368 Sqyard',
+            superBuiltUpArea: '307.69 Super built-up Area',
+            photo: require('../Assets/second.jpeg')
+        },
+        {
+            id: 20,
+            location: 'sector 42 gurugram',
+            name: 'adani m2k oyster grande',
+            price: '18.80 Lac',
+            pricePerSqft: '3312.00/sq/ft.',
+            size: '368 Sqyard',
+            superBuiltUpArea: '307.69 Super built-up Area',
+            photo: require('../Assets/second.jpeg')
+        },
+        {
+            id: 21,
+            location: 'sector 42 gurugram',
+            name: 'adani m2k oyster grande',
+            price: '18.80 Lac',
+            pricePerSqft: '3312.00/sq/ft.',
+            size: '368 Sqyard',
+            superBuiltUpArea: '307.69 Super built-up Area',
+            photo: require('../Assets/second.jpeg')
+        },
         // Add more property objects here
     ];
 
@@ -207,11 +242,23 @@ function Filter() {
 
     // Calculate total number of pages
     const totalPages = Math.ceil(properties.length / propertiesPerPage);
+    console.log(totalPages);
 
     // Change page
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    };
+    // const [value, setValue] = useState(0);
+    const hello = (min, max) => {
+        setmin(min)
+        setmax(max)
+
+    };
+    const hello1 = (min, max) => {
+        setmin2(min)
+        setmax2(max)
+
     };
 
     return (
@@ -239,13 +286,18 @@ function Filter() {
                             </div>
                             <div>
                                 <span>Budget</span>
-                                <div className='flex justify-content mt-1'>
-                                    <h6 className='budget-btn'>0</h6>
-                                    <h6 className='budget-btn'>100+ Crores</h6>
+                                {/* <div className='flex justify-content mt-1'> */}
+                                <div className='min-max-flex'>
+                                    <h6 className='budget-btn'>{min1}</h6>
+                                    <h6 className='budget-btn'>{max1}+L</h6>
                                 </div>
-                                <input type="range" />
-                                <input type="text" placeholder='Min budget' />
-                                <input type="text" placeholder='Max budget' />
+                                <div className='min-max'>
+                                    <div className="inner-div">
+                                        <MultiRangeSlider min={0} max={1000000} onChange={({ min, max }) => hello(min, max)} />
+                                        {/* <MultiRangeSlider min={0} max={100000} onChange={({ min, max }) => setmin(min)} /> */}
+                                    </div>
+                                </div>
+
                             </div>
                             <hr />
                             <h6>Property Type</h6>
@@ -276,13 +328,13 @@ function Filter() {
                             <hr />
                             <div>
                                 <span>Area <br />sq.ft.</span>
-                                <div className='flex justify-content mt-1'>
-                                    <h6 className='budget-btn'>0 sq.ft.</h6>
-                                    <h6 className='budget-btn'>4000+ sq.ft.</h6>
+                                <div className='min-max-flex'>
+                                    <h6 className='budget-btn'>{min2}0sq.ft.</h6>
+                                    <h6 className='budget-btn'>{max2}+ sq.ft.</h6>
                                 </div>
-                                <input type="range" />
-                                <input type="text" placeholder='Min budget' />
-                                <input type="text" placeholder='Max budget' />
+                                <div className="min-max">
+                                    <MultiRangeSlider min={0} max={4000} onChange={({ min, max }) => hello1(min, max)} />
+                                </div>
                             </div>
                             <hr />
                             <h6>Localities</h6>
@@ -327,7 +379,7 @@ function Filter() {
                     </div>
                 </div>
             </section>
-            <Footer />  
+            <Footer />
         </>
     )
 }

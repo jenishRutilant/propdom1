@@ -1,3 +1,9 @@
+.min-max {
+    padding: 30px 0;
+}
+
+
+
 .container12 {
     max-width: 1200px;
     width: 90%;
@@ -24,7 +30,8 @@
 }
 
 .sidebar {
-    width: 20%;
+    width: 100%;
+    max-width: 240px;
     padding: 20px;
     border: 1px solid;
     border-radius: 20px;
@@ -274,10 +281,6 @@
 }
 
 @media screen and (max-width:886px) {
-    input[type="range"] {
-        width: 100px;
-    }
-
     .lider {
         position: relative;
         width: 100px;
@@ -298,6 +301,13 @@
     }
 }
 
+/* @media screen and (max-width:745px) {
+    input[type="range"] {
+        width: 100%;
+        max-width: 570px;
+    }
+} */
+
 @media screen and (max-width:768px) {
     .justify-content {
         display: flex;
@@ -311,6 +321,7 @@
 
     .sidebar {
         width: 100%;
+        max-width: 460px;
     }
 
     .property-btn button {
@@ -342,13 +353,6 @@
     }
 }
 
-@media screen and (max-width:699px) {
-    input[type="range"] {
-        width: 100%;
-        text-align: center;
-    }
-}
-
 @media screen and (max-width:502px) {
     .sidebar button {
         margin: 15px auto;
@@ -362,4 +366,10 @@
     .card-information {
         width: 100% !important;
     }
+}
+
+.min-max-flex {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
 }

@@ -3,10 +3,10 @@ import Navbar from '../Component/Navbar'
 import "../Style/Home.css"
 import ImageSlider from './ImageSlider'
 import Footer from '../Component/Footer'
-import data from "../data";
+// import data from "../Data";
+import Select from 'react-select'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Select from 'react-select'
 import { useNavigate } from 'react-router'
 import axios from 'axios'
 import apiConst from '../GlobalConst/ApiKeys'
@@ -16,8 +16,10 @@ const Home = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     allList();
+    allthPro();
   }, []);
 
+  const [isMenuOpen, setisMenuOpen] = useState(false)
   const [activeTag, setActiveTag] = useState(1);
 
   const [category, setCategory] = useState();
@@ -25,8 +27,6 @@ const Home = () => {
   const [category2, setCategory2] = useState();
   const [category3, setCategory3] = useState();
   const [category4, setCategory4] = useState();
-
-  console.log(category);
 
   const allList = () => {
     var config = {
@@ -38,7 +38,6 @@ const Home = () => {
 
     axios(config)
       .then(function (response) {
-        // console.log(response.data.category);
         setCategory(response.data.category[0])
         setCategory1(response.data.category[1])
         setCategory2(response.data.category[2])
@@ -50,8 +49,6 @@ const Home = () => {
       });
   }
 
-  const [isMenuOpen, setisMenuOpen] = useState(false)
-
   const images = [
     'https://i.imgur.com/SLhqvuO.jpeg',
     'https://i.imgur.com/ha5D75D.jpeg',
@@ -62,29 +59,68 @@ const Home = () => {
     'Luxury living awaits in our exquisite real estate flats, where elegance meets comfort',
   ]
 
+  const handleClick = (tabIndex) => {
+    setActiveTag(tabIndex);
+  }
+  
   const handleInputChange = (selectedOption) => {
-
-    if (selectedOption?.length >= 1) {
-      setisMenuOpen(true)
-    }
-    else {
-      setisMenuOpen(false)
-    }
+    console.log(selectedOption);
+    filteredData(selectedOption)
   };
-
-  const options = data.map(({ id, name }) => ({
-    value: id,
-    label: name,
-  }));
+  
+  const [search, setSearch] = useState([])
+  const [selectedValue, setSelectedValue] = useState()
 
   const navigate = useNavigate();
   const filterPage = () => {
     navigate('/filter')
   }
 
-  const handleClick = (tabIndex) => {
-    setActiveTag(tabIndex);
+  let data1 = JSON.stringify({
+    "search": search
+  });
+  
+  const [abcd, setAbcd] = useState(search);
+  console.log(abcd);
+
+  const onChange = (value) => {
+    console.log(value);
+    setSelectedValue(value)
   }
+
+  const filteredData = (e) => {
+    const searchValue = typeof e === 'string' ? e : String(e);
+    const abcs = search.filter((item) => item?.name?.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1);
+    setAbcd(abcs);
+  };
+
+  const allthPro = () => {
+    let config = {
+      method: 'get',
+      maxBodyLength: Infinity,
+      url: apiConst.pro_list,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: data1
+    };
+
+    axios.request(config)
+      .then((response) => {
+        console.log(response.data.property);
+        setSearch(response.data.property)
+        setAbcd(response.data.property)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  const options = abcd?.map(({ name, _id }) => ({
+    id: _id,
+    label: name,
+  }));
+
   return (
     <>
       <Navbar />
@@ -172,13 +208,41 @@ const Home = () => {
               <div className='search-p'>
                 <Select
                   options={options}
+                  onChange={onChange}
                   onInputChange={handleInputChange}
-                  // placeholder="Select a location"
                   isSearchable
-                  menuIsOpen={isMenuOpen}
-                  isMulti
+                  // menuIsOpen={isMenuOpen}
+                  isMulti={true}
                   required
+                  value={selectedValue}
+                  closeMenuOnSelect={false}
                 />
+
+                {/* <Stack spacing={3} sx={{ width: 500 }}>
+                  <Autocomplete
+                    multiple
+                    id="tags-filled"
+                    options={options.map((option) => option.name)}
+                    freeSolo
+                    renderTags={(value, getTagProps) =>
+                      value.map((option, index) => (
+                        <Chip key={index} variant="outlined" label={option.label} {...getTagProps({ index })} />
+                      ))
+                    }
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        id="outlined-multiline-static"
+                      />
+                    )}
+                  />
+
+                </Stack> */}
+
+                {/* <input type="text" onChange={filteredData}/> */}
+                {/* {abcd.map(item => (
+                  <p>{item.name}</p>
+                ))} */}
               </div>
               <button className='search'>Search</button>
             </div>
