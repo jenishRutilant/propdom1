@@ -194,10 +194,15 @@
     border-radius: 10px;
 }
 
-.property-btn{
+.property-btn {
     text-align: center;
 }
 
+/* @media  screen and (max-width:1280px) {
+    .lider {
+        width: 100px;
+    }
+} */
 @media screen and (max-width:1210px) {
     .right-card {
         width: 100%;
@@ -207,6 +212,11 @@
     .property-btn button {
         margin: 10px 5px;
         padding: 5px 5px;
+    }
+
+    .lider {
+        position: relative;
+        width: 100px;
     }
 }
 
@@ -266,6 +276,11 @@
     input[type="range"] {
         width: 100px;
     }
+
+    .lider {
+        position: relative;
+        width: 100px;
+    }
 }
 
 @media screen and (max-width: 840px) {
@@ -319,6 +334,7 @@
         flex-direction: column;
         display: flex;
     }
+
     .sidebar button {
         margin: 5px 10px;
         padding: 5px 20px;
@@ -327,7 +343,8 @@
 
 @media screen and (max-width:699px) {
     input[type="range"] {
-        width: 90px;
+        width: 100%;
+        text-align: center;
     }
 }
 
