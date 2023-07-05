@@ -3,6 +3,7 @@ import Navbar from "../Component/Navbar";
 import "../Style/Plans.css";
 import Footer from "../Component/Footer";
 import axios from "axios"
+import apiConst from "../GlobalConst/ApiKeys";
 
 const Plans = () => {
 
@@ -19,7 +20,7 @@ const Plans = () => {
     var config = {
       method: 'get',
       maxBodyLength: Infinity,
-      url: 'http://localhost:5000/plans/getallplans',
+      url: apiConst.getallplans,
       headers: {
         'authToken_user': localStorage.getItem('User_token'),
       }

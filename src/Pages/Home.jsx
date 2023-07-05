@@ -8,61 +8,49 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Select from 'react-select'
 import { useNavigate } from 'react-router'
+import axios from 'axios'
+import apiConst from '../GlobalConst/ApiKeys'
 
 const Home = () => {
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-}, []);
+    allList();
+  }, []);
+
+  const [activeTag, setActiveTag] = useState(1);
+
+  const [category, setCategory] = useState();
+  const [category1, setCategory1] = useState();
+  const [category2, setCategory2] = useState();
+  const [category3, setCategory3] = useState();
+  const [category4, setCategory4] = useState();
+
+  console.log(category);
+
+  const allList = () => {
+    var config = {
+      method: 'get',
+      maxBodyLength: Infinity,
+      url: apiConst.list,
+      headers: {}
+    };
+
+    axios(config)
+      .then(function (response) {
+        // console.log(response.data.category);
+        setCategory(response.data.category[0])
+        setCategory1(response.data.category[1])
+        setCategory2(response.data.category[2])
+        setCategory3(response.data.category[3])
+        setCategory4(response.data.category[4])
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
 
   const [isMenuOpen, setisMenuOpen] = useState(false)
-
-  const [backgroundColor, setBackgroundColor] = useState('rgba(255, 255, 255, 0.8)');
-  const [backgroundColor1, setBackgroundColor1] = useState('rgba(255, 255, 255, 0.8)');
-  const [backgroundColor2, setBackgroundColor2] = useState('rgba(255, 255, 255, 0.8)');
-  const [backgroundColor3, setBackgroundColor3] = useState('rgba(255, 255, 255, 0.8)');
-  const [backgroundColor4, setBackgroundColor4] = useState('rgba(255, 255, 255, 0.8)');
-
-  const handleClick = () => {
-    setBackgroundColor('#FDA94F');
-    setBackgroundColor1(true);
-    setBackgroundColor2(true);
-    setBackgroundColor3(true);
-    setBackgroundColor4(true);
-  };
-
-  const handleClick1 = () => {
-    setBackgroundColor(true);
-    setBackgroundColor1('#FDA94F');
-    setBackgroundColor2(true);
-    setBackgroundColor3(true);
-    setBackgroundColor4(true);
-  };
-
-  const handleClick2 = () => {
-    setBackgroundColor(true);
-    setBackgroundColor1(true);
-    setBackgroundColor2('#FDA94F');
-    setBackgroundColor3(true);
-    setBackgroundColor4(true);
-  };
-
-  const handleClick3 = () => {
-    setBackgroundColor(true);
-    setBackgroundColor1(true);
-    setBackgroundColor2(true);
-    setBackgroundColor3('#FDA94F');
-    setBackgroundColor4(true);
-  };
-
-  const handleClick4 = () => {
-    setBackgroundColor(true);
-    setBackgroundColor1(true);
-    setBackgroundColor2(true);
-    setBackgroundColor3(true);
-    setBackgroundColor4('#FDA94F');
-  };
-
 
   const images = [
     'https://i.imgur.com/SLhqvuO.jpeg',
@@ -94,6 +82,9 @@ const Home = () => {
     navigate('/filter')
   }
 
+  const handleClick = (tabIndex) => {
+    setActiveTag(tabIndex);
+  }
   return (
     <>
       <Navbar />
@@ -104,11 +95,11 @@ const Home = () => {
         </div>
         <div style={{ width: "100" }}>
           <div className="center-btns">
-            <div style={{ backgroundColor: backgroundColor }} onClick={handleClick} className='all-btns' to='/'>BUY</div>
-            <div style={{ backgroundColor: backgroundColor1 }} onClick={handleClick1} className='all-btns' to="#rent">RENT/LEASE</div>
-            <div style={{ backgroundColor: backgroundColor2 }} onClick={handleClick2} className='all-btns' to="/">PROJECTS</div>
-            <div style={{ backgroundColor: backgroundColor3 }} onClick={handleClick3} className='all-btns' to="/">BUILDERS</div>
-            <div style={{ backgroundColor: backgroundColor4 }} onClick={handleClick4} className='all-btns' to="/">DEALERS</div>
+            <div onClick={() => handleClick(1)} className={activeTag === 1 ? 'all-btns-active' : 'all-btns'} to='#buy'>{category?.name}</div>
+            <div onClick={() => handleClick(2)} className={activeTag === 2 ? 'all-btns-active' : 'all-btns'} to="#rent">{category1?.name}</div>
+            <div onClick={() => handleClick(3)} className={activeTag === 3 ? 'all-btns-active' : 'all-btns'} to="#projects">{category2?.name}</div>
+            <div onClick={() => handleClick(4)} className={activeTag === 4 ? 'all-btns-active' : 'all-btns'} to="#builders">{category3?.name}</div>
+            <div onClick={() => handleClick(5)} className={activeTag === 5 ? 'all-btns-active' : 'all-btns'} to="#dealer">{category4?.name}</div>
           </div>
         </div>
         <div className="bottom-side">
