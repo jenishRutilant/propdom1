@@ -3,7 +3,6 @@ import Navbar from '../Component/Navbar'
 import "../Style/Home.css"
 import ImageSlider from './ImageSlider'
 import Footer from '../Component/Footer'
-// import data from "../Data";
 import Select from 'react-select'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -16,11 +15,12 @@ const Home = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     allList();
-    allthPro();
+    allthelist();
   }, []);
 
-  const [isMenuOpen, setisMenuOpen] = useState(false)
+  // const [isMenuOpen, setisMenuOpen] = useState(false)
   const [activeTag, setActiveTag] = useState(1);
+  const [options, setOptions] = useState([]);
 
   const [category, setCategory] = useState();
   const [category1, setCategory1] = useState();
@@ -63,63 +63,25 @@ const Home = () => {
     setActiveTag(tabIndex);
   }
   
-  const handleInputChange = (selectedOption) => {
-    console.log(selectedOption);
-    filteredData(selectedOption)
-  };
-  
-  const [search, setSearch] = useState([])
-  const [selectedValue, setSelectedValue] = useState()
-
   const navigate = useNavigate();
   const filterPage = () => {
     navigate('/filter')
   }
 
-  let data1 = JSON.stringify({
-    "search": search
-  });
-  
-  const [abcd, setAbcd] = useState(search);
-  console.log(abcd);
-
-  const onChange = (value) => {
-    console.log(value);
-    setSelectedValue(value)
-  }
-
-  const filteredData = (e) => {
-    const searchValue = typeof e === 'string' ? e : String(e);
-    const abcs = search.filter((item) => item?.name?.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1);
-    setAbcd(abcs);
-  };
-
-  const allthPro = () => {
-    let config = {
-      method: 'get',
-      maxBodyLength: Infinity,
-      url: apiConst.pro_list,
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      data: data1
-    };
-
-    axios.request(config)
-      .then((response) => {
-        console.log(response.data.property);
-        setSearch(response.data.property)
-        setAbcd(response.data.property)
+  const allthelist = () => {
+    axios.get(apiConst.pro_list)
+      .then(response => {
+        const fetchedOptions = response.data.property.map(item => ({
+          value: item._id,
+          label: item.name
+        }));
+        setOptions(fetchedOptions);
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(error => {
+        console.error('Error fetching options:', error);
       });
   }
 
-  const options = abcd?.map(({ name, _id }) => ({
-    id: _id,
-    label: name,
-  }));
 
   return (
     <>
@@ -206,43 +168,7 @@ const Home = () => {
             </div>
             <div className='upper-home'>
               <div className='search-p'>
-                <Select
-                  options={options}
-                  onChange={onChange}
-                  onInputChange={handleInputChange}
-                  isSearchable
-                  // menuIsOpen={isMenuOpen}
-                  isMulti={true}
-                  required
-                  value={selectedValue}
-                  closeMenuOnSelect={false}
-                />
-
-                {/* <Stack spacing={3} sx={{ width: 500 }}>
-                  <Autocomplete
-                    multiple
-                    id="tags-filled"
-                    options={options.map((option) => option.name)}
-                    freeSolo
-                    renderTags={(value, getTagProps) =>
-                      value.map((option, index) => (
-                        <Chip key={index} variant="outlined" label={option.label} {...getTagProps({ index })} />
-                      ))
-                    }
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        id="outlined-multiline-static"
-                      />
-                    )}
-                  />
-
-                </Stack> */}
-
-                {/* <input type="text" onChange={filteredData}/> */}
-                {/* {abcd.map(item => (
-                  <p>{item.name}</p>
-                ))} */}
+                <Select options={options} isMulti />
               </div>
               <button className='search'>Search</button>
             </div>
