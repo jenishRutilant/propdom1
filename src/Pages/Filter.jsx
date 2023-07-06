@@ -7,241 +7,31 @@ import PropertyCard from '../Pages/Property';
 import MultiRangeSlider from '../Pages/MultiRangeSlider'
 
 function Filter() {
+
     const [min1, setmin] = useState(1);
     const [max1, setmax] = useState();
     const [min2, setmin2] = useState();
     const [max2, setmax2] = useState();
     // const [value, setvalue] = useState({ min1: '1', max1: '2' })
+    const [h1, seth1] = useState()
     useEffect(() => {
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+        const helloooo = localStorage.getItem('propertyData')
+        seth1(JSON.parse(helloooo))
     }, []);
-
+    console.log(h1);
 
     const [currentPage, setCurrentPage] = useState(1);
     const [propertiesPerPage] = useState(10); // Number of properties to display per page
 
-    // Assuming you have an array of property data
-    const properties = [
-        {
-            id: 1,
-            location: 'sector 42 gurugram',
-            name: 'adani m2k oyster grande',
-            price: '1.80 Lac',
-            pricePerSqft: '3312.00/sq/ft.',
-            size: '368 Sqyard',
-            superBuiltUpArea: '307.69 Super built-up Area',
-            photo: require('../Assets/banner.jpg')
-        },
-        {
-            id: 2,
-            location: 'sector 42 gurugram',
-            name: 'adani m2k oyster grande',
-            price: '2.80 Lac',
-            pricePerSqft: '3312.00/sq/ft.',
-            size: '368 Sqyard',
-            superBuiltUpArea: '307.69 Super built-up Area',
-            photo: require('../Assets/first.jpeg')
-        },
-        {
-            id: 3,
-            location: 'sector 42 gurugram',
-            name: 'adani m2k oyster grande',
-            price: '3.80 Lac',
-            pricePerSqft: '3312.00/sq/ft.',
-            size: '368 Sqyard',
-            superBuiltUpArea: '307.69 Super built-up Area',
-            photo: require('../Assets/ios.png')
-        },
-        {
-            id: 4,
-            location: 'sector 42 gurugram',
-            name: 'adani m2k oyster grande',
-            price: '4.80 Lac',
-            pricePerSqft: '3312.00/sq/ft.',
-            size: '368 Sqyard',
-            superBuiltUpArea: '307.69 Super built-up Area',
-            photo: require('../Assets/Play.png')
-        },
-        {
-            id: 5,
-            location: 'sector 42 gurugram',
-            name: 'adani m2k oyster grande',
-            price: '5.80 Lac',
-            pricePerSqft: '3312.00/sq/ft.',
-            size: '368 Sqyard',
-            superBuiltUpArea: '307.69 Super built-up Area',
-            photo: require('../Assets/R.png')
-        },
-        {
-            id: 6,
-            location: 'sector 42 gurugram',
-            name: 'adani m2k oyster grande',
-            price: '6.80 Lac',
-            pricePerSqft: '3312.00/sq/ft.',
-            size: '368 Sqyard',
-            superBuiltUpArea: '307.69 Super built-up Area',
-            photo: require('../Assets/second.jpeg')
-        },
-        {
-            id: 7,
-            location: 'sector 42 gurugram',
-            name: 'adani m2k oyster grande',
-            price: '7.80 Lac',
-            pricePerSqft: '3312.00/sq/ft.',
-            size: '368 Sqyard',
-            superBuiltUpArea: '307.69 Super built-up Area',
-            photo: require('../Assets/banner.jpg')
-        },
-        {
-            id: 8,
-            location: 'sector 42 gurugram',
-            name: 'adani m2k oyster grande',
-            price: '8.80 Lac',
-            pricePerSqft: '3312.00/sq/ft.',
-            size: '368 Sqyard',
-            superBuiltUpArea: '307.69 Super built-up Area',
-            photo: require('../Assets/first.jpeg')
-        },
-        {
-            id: 9,
-            location: 'sector 42 gurugram',
-            name: 'adani m2k oyster grande',
-            price: '9.80 Lac',
-            pricePerSqft: '3312.00/sq/ft.',
-            size: '368 Sqyard',
-            superBuiltUpArea: '307.69 Super built-up Area',
-            photo: require('../Assets/ios.png')
-        },
-        {
-            id: 10,
-            location: 'sector 42 gurugram',
-            name: 'adani m2k oyster grande',
-            price: '10.80 Lac',
-            pricePerSqft: '3312.00/sq/ft.',
-            size: '368 Sqyard',
-            superBuiltUpArea: '307.69 Super built-up Area',
-            photo: require('../Assets/Play.png')
-        },
-        {
-            id: 11,
-            location: 'sector 42 gurugram',
-            name: 'adani m2k oyster grande',
-            price: '11.80 Lac',
-            pricePerSqft: '3312.00/sq/ft.',
-            size: '368 Sqyard',
-            superBuiltUpArea: '307.69 Super built-up Area',
-            photo: require('../Assets/R.png')
-        },
-        {
-            id: 12,
-            location: 'sector 42 gurugram',
-            name: 'adani m2k oyster grande',
-            price: '12.80 Lac',
-            pricePerSqft: '3312.00/sq/ft.',
-            size: '368 Sqyard',
-            superBuiltUpArea: '307.69 Super built-up Area',
-            photo: require('../Assets/second.jpeg')
-        },
-        {
-            id: 13,
-            location: 'sector 42 gurugram',
-            name: 'adani m2k oyster grande',
-            price: '13.80 Lac',
-            pricePerSqft: '3312.00/sq/ft.',
-            size: '368 Sqyard',
-            superBuiltUpArea: '307.69 Super built-up Area',
-            photo: require('../Assets/banner.jpg')
-        },
-        {
-            id: 14,
-            location: 'sector 42 gurugram',
-            name: 'adani m2k oyster grande',
-            price: '14.80 Lac',
-            pricePerSqft: '3312.00/sq/ft.',
-            size: '368 Sqyard',
-            superBuiltUpArea: '307.69 Super built-up Area',
-            photo: require('../Assets/first.jpeg')
-        },
-        {
-            id: 15,
-            location: 'sector 42 gurugram',
-            name: 'adani m2k oyster grande',
-            price: '15.80 Lac',
-            pricePerSqft: '3312.00/sq/ft.',
-            size: '368 Sqyard',
-            superBuiltUpArea: '307.69 Super built-up Area',
-            photo: require('../Assets/ios.png')
-        },
-        {
-            id: 16,
-            location: 'sector 42 gurugram',
-            name: 'adani m2k oyster grande',
-            price: '16.80 Lac',
-            pricePerSqft: '3312.00/sq/ft.',
-            size: '368 Sqyard',
-            superBuiltUpArea: '307.69 Super built-up Area',
-            photo: require('../Assets/Play.png')
-        },
-        {
-            id: 17,
-            location: 'sector 42 gurugram',
-            name: 'adani m2k oyster grande',
-            price: '17.80 Lac',
-            pricePerSqft: '3312.00/sq/ft.',
-            size: '368 Sqyard',
-            superBuiltUpArea: '307.69 Super built-up Area',
-            photo: require('../Assets/R.png')
-        },
-        {
-            id: 18,
-            location: 'sector 42 gurugram',
-            name: 'adani m2k oyster grande',
-            price: '18.80 Lac',
-            pricePerSqft: '3312.00/sq/ft.',
-            size: '368 Sqyard',
-            superBuiltUpArea: '307.69 Super built-up Area',
-            photo: require('../Assets/second.jpeg')
-        },
-        {
-            id: 19,
-            location: 'sector 42 gurugram',
-            name: 'adani m2k oyster grande',
-            price: '18.80 Lac',
-            pricePerSqft: '3312.00/sq/ft.',
-            size: '368 Sqyard',
-            superBuiltUpArea: '307.69 Super built-up Area',
-            photo: require('../Assets/second.jpeg')
-        },
-        {
-            id: 20,
-            location: 'sector 42 gurugram',
-            name: 'adani m2k oyster grande',
-            price: '18.80 Lac',
-            pricePerSqft: '3312.00/sq/ft.',
-            size: '368 Sqyard',
-            superBuiltUpArea: '307.69 Super built-up Area',
-            photo: require('../Assets/second.jpeg')
-        },
-        {
-            id: 21,
-            location: 'sector 42 gurugram',
-            name: 'adani m2k oyster grande',
-            price: '18.80 Lac',
-            pricePerSqft: '3312.00/sq/ft.',
-            size: '368 Sqyard',
-            superBuiltUpArea: '307.69 Super built-up Area',
-            photo: require('../Assets/second.jpeg')
-        },
-        // Add more property objects here
-    ];
-
     // Logic for displaying properties
     const indexOfLastProperty = currentPage * propertiesPerPage;
     const indexOfFirstProperty = indexOfLastProperty - propertiesPerPage;
-    const currentProperties = properties.slice(indexOfFirstProperty, indexOfLastProperty);
+    const currentProperties = h1?.slice(indexOfFirstProperty, indexOfLastProperty);
+    console.log(currentProperties);
 
     // Calculate total number of pages
-    const totalPages = Math.ceil(properties.length / propertiesPerPage);
+    const totalPages = Math.ceil(h1?.length / propertiesPerPage);
     console.log(totalPages);
 
     // Change page
@@ -358,13 +148,13 @@ function Filter() {
                             </div>
 
                             <div>
-                                {currentProperties.map((property) => (
+                                {currentProperties?.map((property) => (
                                     <PropertyCard key={property.id} property={property} />
                                 ))}
 
                                 {/* Pagination */}
                                 <div className="pagination">
-                                    {Array.from({ length: totalPages }).map((_, index) => (
+                                    {Array.from({ length: totalPages })?.map((_, index) => (
                                         <button
                                             key={index}
                                             onClick={() => paginate(index + 1)}

@@ -6,9 +6,9 @@ import Footer from '../Component/Footer'
 import Select from 'react-select'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useNavigate } from 'react-router'
 import axios from 'axios'
 import apiConst from '../GlobalConst/ApiKeys'
+import ApiCall from '../GlobalConst/ApiCall'
 
 const Home = () => {
 
@@ -18,15 +18,11 @@ const Home = () => {
     allthelist();
   }, []);
 
-  // const [isMenuOpen, setisMenuOpen] = useState(false)
-  const [activeTag, setActiveTag] = useState(1);
-  const [options, setOptions] = useState([]);
-
-  const [category, setCategory] = useState();
-  const [category1, setCategory1] = useState();
-  const [category2, setCategory2] = useState();
-  const [category3, setCategory3] = useState();
-  const [category4, setCategory4] = useState();
+  const [activeTag, setActiveTag] = useState();
+  const [category, setCategory] = useState([]);
+  const [property, setProperty] = useState([]);
+  const [options  , setOptions] = useState([]);
+  const [selectedOptions, setSelectedOptions] = useState([]);
 
   const allList = () => {
     var config = {
@@ -38,11 +34,24 @@ const Home = () => {
 
     axios(config)
       .then(function (response) {
-        setCategory(response.data.category[0])
-        setCategory1(response.data.category[1])
-        setCategory2(response.data.category[2])
-        setCategory3(response.data.category[3])
-        setCategory4(response.data.category[4])
+        setCategory(response.data.category)
+        console.log(category);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  const allPropertyList = (categoryId) => {
+    var config = {
+      method: 'get',
+      maxBodyLength: Infinity,
+      url: `${apiConst.pro_types}=${categoryId}`,
+      headers: {}
+    };
+    axios(config)
+      .then(function (response) {
+        setProperty(response.data.propertyType)
       })
       .catch(function (error) {
         console.log(error);
@@ -59,20 +68,19 @@ const Home = () => {
     'Luxury living awaits in our exquisite real estate flats, where elegance meets comfort',
   ]
 
-  const handleClick = (tabIndex) => {
+  const [disablebtn, setdisablebtn] = useState(true)
+
+  const handleClick = (tabIndex, categoryId) => {
     setActiveTag(tabIndex);
-  }
-  
-  const navigate = useNavigate();
-  const filterPage = () => {
-    navigate('/filter')
+    allPropertyList(categoryId);
+    setdisablebtn(false)
   }
 
   const allthelist = () => {
-    axios.get(apiConst.pro_list)
-      .then(response => {
-        const fetchedOptions = response.data.property.map(item => ({
-          value: item._id,
+    ApiCall("get", apiConst.pro_list, null, null, null)
+      .then(function (response) {
+        console.log(response.data.property[0].property);
+        const fetchedOptions = response.data.property[0].property.map(item => ({
           label: item.name
         }));
         setOptions(fetchedOptions);
@@ -82,6 +90,56 @@ const Home = () => {
       });
   }
 
+  const handleSelectChange = (selectedOptions) => {
+    setSelectedOptions(selectedOptions);
+  };
+
+  // const selectFunction = selectedOptions?.map(option => option.value)
+  // const [property123, setProperty] = useState([])
+
+
+  const [area, setArea] = useState()
+  const [city, setCity] = useState()
+  const [state, setState] = useState()
+
+  var searchData = JSON.stringify({
+    area: options
+    // city: options[1],
+    // state: options[2]
+  });
+  // {"area":[{"label":["Sector 42","Gurugram","Haryana"]}
+  // console.log(searchData);
+
+  const search = () => {
+    var config = {
+      method: 'post',
+      maxBodyLength: Infinity,
+      url: apiConst.search,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: searchData
+    };
+    console.log(config.data);
+
+    axios(config)
+      .then(function (response) {
+        console.log(response);
+        setArea(response.data.property);
+        setCity(response.data.property);
+        setState(response.data.property);
+        localStorage.setItem('propertyData', JSON.stringify(response.data.property));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+  const filterPage = (e) => {
+    e.preventDefault();
+    search();
+    // navigate('/filter')
+    // window.location.href = "/filter"
+  }
 
   return (
     <>
@@ -91,84 +149,41 @@ const Home = () => {
         <div className='banner-img'>
           <img src={require("../Assets/banner.jpg")} alt=" " />
         </div>
-        <div style={{ width: "100" }}>
-          <div className="center-btns">
-            <div onClick={() => handleClick(1)} className={activeTag === 1 ? 'all-btns-active' : 'all-btns'} to='#buy'>{category?.name}</div>
-            <div onClick={() => handleClick(2)} className={activeTag === 2 ? 'all-btns-active' : 'all-btns'} to="#rent">{category1?.name}</div>
-            <div onClick={() => handleClick(3)} className={activeTag === 3 ? 'all-btns-active' : 'all-btns'} to="#projects">{category2?.name}</div>
-            <div onClick={() => handleClick(4)} className={activeTag === 4 ? 'all-btns-active' : 'all-btns'} to="#builders">{category3?.name}</div>
-            <div onClick={() => handleClick(5)} className={activeTag === 5 ? 'all-btns-active' : 'all-btns'} to="#dealer">{category4?.name}</div>
-          </div>
+        <div className="center-btns">
+          {
+            category?.map((item, i) => (
+              <div key={i} >
+                <div onClick={() => handleClick(i, item._id)} className={activeTag === i ? 'all-btns-active' : 'all-btns'} >{item?.name}</div>
+              </div>
+            ))
+          }
         </div>
         <div className="bottom-side">
           <form className="display-flex-bottom" onSubmit={filterPage}>
             <div className="dropdown" id="valueItemDrop">
               <button className="selectbox" id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">
+                aria-expanded="false" disabled={disablebtn ? true : ""}>
                 All Property Types <i className="fa-solid fa-angle-down"></i>
               </button>
-              <ul className="dropdown-menu dp" aria-labelledby="dLabel">
-                <li className="checkbox form-group">
-                  <input type="checkbox" id="valuePot" value="Value Pot" name="Value Pot" />
-                  <label className='lebel123' htmlFor="valuePot">Flat/Apartment</label>
-                </li>
-                <li className="checkbox form-group">
-                  <input type="checkbox" id="payback" value="Payback" name="Payback" />
-                  <label className='lebel123' htmlFor="payback">Builder Floor</label>
-                </li>
-                <li className="checkbox form-group">
-                  <input type="checkbox" id="writeOff" value="Write-off" name="Write-off" />
-                  <label className='lebel123' htmlFor="writeOff">Villa</label>
-                </li>
-                <li className="checkbox form-group">
-                  <input type="checkbox" id="offset" value="Offset" name="Offset" />
-                  <label className='lebel123' htmlFor="offset">Land</label>
-                </li>
-                <li className="checkbox form-group">
-                  <input type="checkbox" id="genValuePot" value="Gen Value Pot" name="Gen Value Pot" />
-                  <label className='lebel123' htmlFor="genValuePot">House</label>
-                </li>
-                <li className="checkbox form-group">
-                  <input type="checkbox" id="genValuePot" value="Gen Value Pot" name="Gen Value Pot" />
-                  <label className='lebel123' htmlFor="genValuePot">Ready to move offices</label>
-                </li>
-                <li className="checkbox form-group">
-                  <input type="checkbox" id="genValuePot" value="Gen Value Pot" name="Gen Value Pot" />
-                  <label className='lebel123' htmlFor="genValuePot">Shops & Retail</label>
-                </li>
-                <li className="checkbox form-group">
-                  <input type="checkbox" id="genValuePot" value="Gen Value Pot" name="Gen Value Pot" />
-                  <label className='lebel123' htmlFor="genValuePot">Warehouse</label>
-                </li>
-                <li className="checkbox form-group">
-                  <input type="checkbox" id="genValuePot" value="Gen Value Pot" name="Gen Value Pot" />
-                  <label className='lebel123' htmlFor="genValuePot">Factory & Manufacturing</label>
-                </li>
-                <li className="checkbox form-group">
-                  <input type="checkbox" id="genValuePot" value="Gen Value Pot" name="Gen Value Pot" />
-                  <label className='lebel123' htmlFor="genValuePot">Bare shell offices</label>
-                </li>
-                <li className="checkbox form-group">
-                  <input type="checkbox" id="genValuePot" value="Gen Value Pot" name="Gen Value Pot" />
-                  <label className='lebel123' htmlFor="genValuePot">Commercial/Inst. Land</label>
-                </li>
-                <li className="checkbox form-group">
-                  <input type="checkbox" id="genValuePot" value="Gen Value Pot" name="Gen Value Pot" />
-                  <label className='lebel123' htmlFor="genValuePot">Industrial Land/Plots</label>
-                </li>
-                <li className="checkbox form-group">
-                  <input type="checkbox" id="genValuePot" value="Gen Value Pot" name="Gen Value Pot" />
-                  <label className='lebel123' htmlFor="genValuePot">Cold Storage</label>
-                </li>
-                <li className="checkbox form-group">
-                  <input type="checkbox" id="genValuePot" value="Gen Value Pot" name="Gen Value Pot" />
-                  <label className='lebel123' htmlFor="genValuePot">Hotel/Resorts</label>
-                </li>
-              </ul>
+              {
+                property.length > 0 &&
+                <ul className="dropdown-menu dp" aria-labelledby="dLabel">
+                  {
+                    property.map((item) => {
+                      return (
+                        <li key={item?._id} className="checkbox form-group">
+                          <input type="checkbox" id={item?._id} value={item?.name} name={item?.name} />
+                          <label className='lebel123' htmlFor={item?._id}>{item?.name}</label>
+                        </li>
+                      )
+                    })
+                  }
+                </ul>
+              }
             </div>
             <div className='upper-home'>
               <div className='search-p'>
-                <Select options={options} isMulti />
+                <Select options={options} isMulti required />
               </div>
               <button className='search'>Search</button>
             </div>

@@ -13,7 +13,9 @@ const apiConst = {
   add_complain: `${BASE_URL}complain/add`,
   getallplans: `${BASE_URL}plans/getallplans`,
   list: `${BASE_URL}category/list`,
-  pro_list: `${BASE_URL}property/list`
+  pro_list: `${BASE_URL}property/list`,
+  search: `${BASE_URL}property/search`,
+  pro_types:`${BASE_URL}propertyType/list/?categoryId`
 };
 
 export default apiConst;

@@ -3,7 +3,6 @@ import axios from "axios";
 const ApiCall = async (method, url, data, headers, params) =>
     new Promise(async (resolve, reject) => {
         const token = await localStorage.getItem("token");
-        console.log({ token });
         const options = {
             ...{
                 method,
