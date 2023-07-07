@@ -62,7 +62,7 @@ const Navbar = () => {
                         <NavLink to="/login" className={({ isActive }) => (isActive ? "active" : 'none')}><li>Login</li></NavLink>
                         <NavLink to="/CustomerService" className={({ isActive }) => (isActive ? "active" : 'none')}><li>Customer Service</li></NavLink>
                         <NavLink to="/plans" className={({ isActive }) => (isActive ? "active" : 'none')}><li>Plans</li></NavLink>
-                        <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Ask Query</button>
+                        <button type="button" className="btn p-2 btn-warning" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Ask Query</button>
 
 
 
@@ -75,7 +75,7 @@ const Navbar = () => {
                     <div className="modal-dialog" role="document">
                         <div className="modal-content">
                             <div className="modal-header">
-                                <h5 className="modal-title" id="exampleModalLabel">Description</h5>
+                                <h5 className="modal-title" id="exampleModalLabel">Ask Qurey</h5>
                                 <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">×</span>
                                 </button>
@@ -83,11 +83,10 @@ const Navbar = () => {
                             <div className="modal-body">
                                 <form>
                                     <div className="form-group">
-                                        <label htmlFor="recipient-name" className="col-form-label">Title : </label>
+                                        <label htmlFor="recipient-name" className="col-form-label">Description : </label>
                                        
                                     </div>
                                     <div className="form-group">
-                                        <label htmlFor="message-text" className="col-form-label">Message:</label>
                                         <textarea className="form-control" id="message-text" name="message" defaultValue={""} onChange={onChange}/>
                                     </div>
                                 </form>
