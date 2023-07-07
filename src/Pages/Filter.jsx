@@ -108,7 +108,7 @@ function Filter() {
                                 </div>
                                 <div className='min-max'>
                                     <div className="inner-div">
-                                        <MultiRangeSlider min={0} max={1000000} onChange={({ min, max }) => hello(min, max)} />
+                                        <MultiRangeSlider min={1} max={100} onChange={({ min, max }) => hello(min, max)} />
                                         {/* <MultiRangeSlider min={0} max={100000} onChange={({ min, max }) => setmin(min)} /> */}
                                     </div>
                                 </div>
@@ -117,28 +117,29 @@ function Filter() {
                             <hr />
                             <h6>Property Type</h6>
                             <div className='property-btn'>
-                                <div><i className="fa-solid fa-bars-staggered"></i>Residential Apartment</div>
-                                <div><i className="fa-solid fa-bars-staggered"></i>Builder Floor</div>
-                                <div><i className="fa-solid fa-bars-staggered"></i>Residential Land</div>
-                                <div><i className="fa-solid fa-bars-staggered"></i>Independent House/Villa</div>
-                                <div><i className="fa-solid fa-bars-staggered"></i>1 RK/ Studio Apartment</div>
+                                {/* <i className="fa-solid fa-bars-staggered"></i> */}
+                                <div>Residential Apartment</div>
+                                <div>Builder Floor</div>
+                                <div>Residential Land</div>
+                                <div>Independent House/Villa</div>
+                                <div>1 RK/ Studio Apartment</div>
                             </div>
                             <hr />
                             <h6>No. of Bedrooms</h6>
                             <div className='bedrooms-btn'>
-                                <div><i className="fa-solid fa-bars-staggered"></i>1Rk/ 1Bhk</div>
-                                <div><i className="fa-solid fa-bars-staggered"></i>2Bhk</div>
-                                <div><i className="fa-solid fa-bars-staggered"></i>3Bhk</div>
-                                <div><i className="fa-solid fa-bars-staggered"></i>4Bhk</div>
-                                <div><i className="fa-solid fa-bars-staggered"></i>5Bhk</div>
+                                <div>1Rk/ 1Bhk</div>
+                                <div>2Bhk</div>
+                                <div>3Bhk</div>
+                                <div>4Bhk</div>
+                                <div>5Bhk</div>
                             </div>
                             <hr />
                             <h6>Posted by</h6>
                             <div className='posted-btn'>
-                                <div> <i className="fa-solid fa-bars-staggered "></i>owner</div>
-                                <div><i className="fa-solid fa-bars-staggered"></i>builder</div>
-                                <div><i className="fa-solid fa-bars-staggered"></i>dealer</div>
-                                <div><i className="fa-solid fa-bars-staggered"></i>feature dealer</div>
+                                <div>owner</div>
+                                <div>builder</div>
+                                <div>dealer</div>
+                                <div>feature dealer</div>
                             </div>
                             <hr />
                             <div>
@@ -154,10 +155,10 @@ function Filter() {
                             <hr />
                             <h6>Localities</h6>
                             <div className='posted-btn'>
-                                <div><i className="fa-solid fa-bars-staggered "></i>owner</div>
-                                <div><i className="fa-solid fa-bars-staggered"></i>builder</div>
-                                <div><i className="fa-solid fa-bars-staggered"></i>dealer</div>
-                                <div><i className="fa-solid fa-bars-staggered"></i>feature dealer</div>
+                                <div>owner</div>
+                                <div>builder</div>
+                                <div>dealer</div>
+                                <div>feature dealer</div>
                             </div>
                         </div>
 
