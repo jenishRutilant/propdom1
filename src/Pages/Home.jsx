@@ -21,7 +21,7 @@ const Home = () => {
   const [activeTag, setActiveTag] = useState();
   const [category, setCategory] = useState([]);
   const [property, setProperty] = useState([]);
-  const [options  , setOptions] = useState([]);
+  const [options, setOptions] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState([]);
 
   const allList = () => {
@@ -35,7 +35,6 @@ const Home = () => {
     axios(config)
       .then(function (response) {
         setCategory(response.data.category)
-        console.log(category);
       })
       .catch(function (error) {
         console.log(error);
@@ -79,9 +78,9 @@ const Home = () => {
   const allthelist = () => {
     ApiCall("get", apiConst.pro_list, null, null, null)
       .then(function (response) {
-        console.log(response.data.property[0].property);
-        const fetchedOptions = response.data.property[0].property.map(item => ({
-          label: item.name
+        const fetchedOptions = response.data.property[0].property.map((item, index) => ({
+          value: index,
+          label: item
         }));
         setOptions(fetchedOptions);
       })
@@ -94,51 +93,62 @@ const Home = () => {
     setSelectedOptions(selectedOptions);
   };
 
-  // const selectFunction = selectedOptions?.map(option => option.value)
-  // const [property123, setProperty] = useState([])
+  const selectFunction = selectedOptions?.map(option => option.label);
+  const selectFunction1 = selectFunction.map(label => label.split(', '));
 
+  const [sector, setsector] = useState([])
+  const [area, setarea] = useState([])
+  const [city, setcity] = useState([])
 
-  const [area, setArea] = useState()
-  const [city, setCity] = useState()
-  const [state, setState] = useState()
+  const saveDataToLocalStorage = () => {
+    localStorage.setItem('sectorData', JSON.stringify(sector));
+    localStorage.setItem('areaData', JSON.stringify(area));
+    localStorage.setItem('cityData', JSON.stringify(city));
+  };
 
-  var searchData = JSON.stringify({
-    area: options
-    // city: options[1],
-    // state: options[2]
+  selectFunction1.forEach(obj => {
+    sector.push(obj[0]);
+    area.push(obj[1]);
+    city.push(obj[2]);
   });
-  // {"area":[{"label":["Sector 42","Gurugram","Haryana"]}
-  // console.log(searchData);
 
-  const search = () => {
-    var config = {
-      method: 'post',
-      maxBodyLength: Infinity,
-      url: apiConst.search,
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      data: searchData
-    };
-    console.log(config.data);
+  // const [property123, setProperty] = useState([])
+  // var searchData = {
+  //   sector: "Sector 42",
+  //   area: "Gurugram",
+  //   city: "Haryana"
+  // };
 
-    axios(config)
-      .then(function (response) {
-        console.log(response);
-        setArea(response.data.property);
-        setCity(response.data.property);
-        setState(response.data.property);
-        localStorage.setItem('propertyData', JSON.stringify(response.data.property));
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
+  // const search = () => {
+  //   var data = {
+  //     "area": sector,
+  //     "city": area,
+  //     "state": city
+  //   };
+
+  //   var config = {
+  //     method: 'post',
+  //     maxBodyLength: Infinity,
+  //     url: apiConst.search,
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     data: data
+  //   };
+
+  //   axios(config)
+  //     .then(function (response) {
+  //       console.log(response.data);
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error);
+  //     });
+  // }
   const filterPage = (e) => {
     e.preventDefault();
-    search();
+    saveDataToLocalStorage();
     // navigate('/filter')
-    // window.location.href = "/filter"
+    window.location.href = "/filter"
   }
 
   return (
@@ -183,7 +193,7 @@ const Home = () => {
             </div>
             <div className='upper-home'>
               <div className='search-p'>
-                <Select options={options} isMulti required />
+                <Select options={options} isMulti required onChange={handleSelectChange} />
               </div>
               <button className='search'>Search</button>
             </div>

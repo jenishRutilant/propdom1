@@ -14,10 +14,20 @@ function Filter() {
     const [max2, setmax2] = useState();
     // const [value, setvalue] = useState({ min1: '1', max1: '2' })
     const [h1, seth1] = useState()
+
+    const sectorData = localStorage.getItem('sectorData');
+    const areaData = localStorage.getItem('areaData');
+    const cityData = localStorage.getItem('cityData');
+
+    const allData = {
+        sector: sectorData,
+        area: areaData,
+        city: cityData
+    };
+    
     useEffect(() => {
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-        const helloooo = localStorage.getItem('propertyData')
-        seth1(JSON.parse(helloooo))
+        
     }, []);
     console.log(h1);
 
@@ -56,23 +66,23 @@ function Filter() {
             <Navbar2 />
             <section className='section-y'>
                 <div className="container12">
-                    <div className='flex'>
+                    <div className='main-div'>
 
                         {/* Filter */}
 
                         <div className='sidebar'>
-                            <div className='flex justify-content align-items'>
+                            <div className=''>
                                 <h6 className='a-f'>Applied Filters</h6>
                                 <Link to="#">clear all</Link>
                             </div>
-                            <div className=''>
-                                <button>sector 47 gurgaon</button>
-                                <button>sector 47 gurgaon</button>
-                                <button>sector 47 gurgaon</button>
-                                <button>sector 47 gurgaon</button>
-                                <button>sector 47 gurgaon</button>
-                                <button>sector 47 gurgaon</button>
-                                <button>sector 47 gurgaon</button>
+                            <div className='mnb'>
+                                <div className='allthesector'>sector 47 gurgaon</div>
+                                <div className='allthesector'>sector 47 gurgaon</div>
+                                <div className='allthesector'>sector 47 gurgaon</div>
+                                <div className='allthesector'>sector 47 gurgaon</div>
+                                <div className='allthesector'>sector 47 gurgaon</div>
+                                <div className='allthesector'>sector 47 gurgaon</div>
+                                <div className='allthesector'>sector 47 gurgaon</div>
                             </div>
                             <div>
                                 <span>Budget</span>
@@ -92,28 +102,28 @@ function Filter() {
                             <hr />
                             <h6>Property Type</h6>
                             <div className='property-btn'>
-                                <button> <i className="fa-solid fa-bars-staggered"></i>Residential Apartment</button>
-                                <button><i className="fa-solid fa-bars-staggered"></i>Builder Floor</button>
-                                <button><i className="fa-solid fa-bars-staggered"></i>Residential Land</button>
-                                <button><i className="fa-solid fa-bars-staggered"></i>Independent House/Villa</button>
-                                <button><i className="fa-solid fa-bars-staggered"></i>1 RK/ Studio Apartment</button>
+                                <div><i className="fa-solid fa-bars-staggered"></i>Residential Apartment</div>
+                                <div><i className="fa-solid fa-bars-staggered"></i>Builder Floor</div>
+                                <div><i className="fa-solid fa-bars-staggered"></i>Residential Land</div>
+                                <div><i className="fa-solid fa-bars-staggered"></i>Independent House/Villa</div>
+                                <div><i className="fa-solid fa-bars-staggered"></i>1 RK/ Studio Apartment</div>
                             </div>
                             <hr />
                             <h6>No. of Bedrooms</h6>
                             <div className='bedrooms-btn'>
-                                <button><i className="fa-solid fa-bars-staggered"></i>1Rk/ 1Bhk</button>
-                                <button><i className="fa-solid fa-bars-staggered"></i>2Bhk</button>
-                                <button><i className="fa-solid fa-bars-staggered"></i>3Bhk</button>
-                                <button><i className="fa-solid fa-bars-staggered"></i>4Bhk</button>
-                                <button><i className="fa-solid fa-bars-staggered"></i>5Bhk</button>
+                                <div><i className="fa-solid fa-bars-staggered"></i>1Rk/ 1Bhk</div>
+                                <div><i className="fa-solid fa-bars-staggered"></i>2Bhk</div>
+                                <div><i className="fa-solid fa-bars-staggered"></i>3Bhk</div>
+                                <div><i className="fa-solid fa-bars-staggered"></i>4Bhk</div>
+                                <div><i className="fa-solid fa-bars-staggered"></i>5Bhk</div>
                             </div>
                             <hr />
                             <h6>Posted by</h6>
                             <div className='posted-btn'>
-                                <button> <i className="fa-solid fa-bars-staggered "></i>owner</button>
-                                <button><i className="fa-solid fa-bars-staggered"></i>builder</button>
-                                <button><i className="fa-solid fa-bars-staggered"></i>dealer</button>
-                                <button><i className="fa-solid fa-bars-staggered"></i>feature dealer</button>
+                                <div> <i className="fa-solid fa-bars-staggered "></i>owner</div>
+                                <div><i className="fa-solid fa-bars-staggered"></i>builder</div>
+                                <div><i className="fa-solid fa-bars-staggered"></i>dealer</div>
+                                <div><i className="fa-solid fa-bars-staggered"></i>feature dealer</div>
                             </div>
                             <hr />
                             <div>
@@ -129,10 +139,10 @@ function Filter() {
                             <hr />
                             <h6>Localities</h6>
                             <div className='posted-btn'>
-                                <button> <i className="fa-solid fa-bars-staggered "></i>owner</button>
-                                <button><i className="fa-solid fa-bars-staggered"></i>builder</button>
-                                <button><i className="fa-solid fa-bars-staggered"></i>dealer</button>
-                                <button><i className="fa-solid fa-bars-staggered"></i>feature dealer</button>
+                                <div><i className="fa-solid fa-bars-staggered "></i>owner</div>
+                                <div><i className="fa-solid fa-bars-staggered"></i>builder</div>
+                                <div><i className="fa-solid fa-bars-staggered"></i>dealer</div>
+                                <div><i className="fa-solid fa-bars-staggered"></i>feature dealer</div>
                             </div>
                         </div>
 

@@ -31,13 +31,16 @@
 
 .sidebar {
     width: 100%;
-    max-width: 240px;
     padding: 20px;
     border: 1px solid;
     border-radius: 20px;
 }
 
-.sidebar button {
+.mnb{
+    width: 100%;
+}
+
+.allthesector {
     background: #f0f9ff;
     border: 1px solid #A3DAFF;
     padding: 5px;
