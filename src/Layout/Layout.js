@@ -9,6 +9,7 @@ import Footer from "../Component/Footer";
 import Filter from "../Pages/Filter";
 import Subpro from "../Pages/Subpro";
 import PageNotFound from "../Pages/PageNotFound";
+import Democard from "../Component/Democard";
 
 function Layout() {
   return (
@@ -23,6 +24,7 @@ function Layout() {
         <Route path="/Filter" element={<Filter />} />
         <Route path="/footer" element={<Footer />} />
         <Route path="/Subpro" element={<Subpro />} />
+        <Route path="/democard" element={<Democard />} />
 
         <Route path="*" element={<PageNotFound />} />
       </Routes>
