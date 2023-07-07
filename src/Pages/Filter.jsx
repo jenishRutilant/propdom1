@@ -5,51 +5,66 @@ import Navbar2 from '../Component/Navbar2'
 import Footer from '../Component/Footer'
 import PropertyCard from '../Pages/Property';
 import MultiRangeSlider from '../Pages/MultiRangeSlider'
+import axios, { all } from 'axios'
+import apiConst from '../GlobalConst/ApiKeys'
 
 function Filter() {
+
+    useEffect(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+        search();
+    }, []);
 
     const [min1, setmin] = useState(1);
     const [max1, setmax] = useState();
     const [min2, setmin2] = useState();
     const [max2, setmax2] = useState();
-    // const [value, setvalue] = useState({ min1: '1', max1: '2' })
-    const [h1, seth1] = useState()
 
     const sectorData = localStorage.getItem('sectorData');
     const areaData = localStorage.getItem('areaData');
     const cityData = localStorage.getItem('cityData');
 
-    const allData = {
-        sector: sectorData,
-        area: areaData,
-        city: cityData
-    };
-    
-    useEffect(() => {
-        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-        
-    }, []);
-    console.log(h1);
+    const [lol, setlol] = useState()
+
+    const search = () => {
+        var data = {
+            area: sectorData.split(','),
+            city: areaData.split(','),
+            state: cityData.split(',')
+        };
+
+        var config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: apiConst.search,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: data
+        };
+
+        axios(config)
+            .then(function (response) {
+                setlol(response.data.property)
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
 
     const [currentPage, setCurrentPage] = useState(1);
-    const [propertiesPerPage] = useState(10); // Number of properties to display per page
+    const [propertiesPerPage] = useState(10);
 
-    // Logic for displaying properties
     const indexOfLastProperty = currentPage * propertiesPerPage;
     const indexOfFirstProperty = indexOfLastProperty - propertiesPerPage;
-    const currentProperties = h1?.slice(indexOfFirstProperty, indexOfLastProperty);
-    console.log(currentProperties);
+    const currentProperties = lol?.slice(indexOfFirstProperty, indexOfLastProperty);
 
-    // Calculate total number of pages
-    const totalPages = Math.ceil(h1?.length / propertiesPerPage);
-    console.log(totalPages);
+    const totalPages = Math.ceil(lol?.length / propertiesPerPage);
 
-    // Change page
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     };
-    // const [value, setValue] = useState(0);
     const hello = (min, max) => {
         setmin(min)
         setmax(max)
@@ -66,30 +81,30 @@ function Filter() {
             <Navbar2 />
             <section className='section-y'>
                 <div className="container12">
-                    <div className='main-div'>
+                    <div className='flex'>
 
                         {/* Filter */}
 
                         <div className='sidebar'>
-                            <div className=''>
+                            <div className='flex justify-content align-items'>
                                 <h6 className='a-f'>Applied Filters</h6>
                                 <Link to="#">clear all</Link>
                             </div>
-                            <div className='mnb'>
+                            <div className=''>
                                 <div className='allthesector'>sector 47 gurgaon</div>
                                 <div className='allthesector'>sector 47 gurgaon</div>
                                 <div className='allthesector'>sector 47 gurgaon</div>
+                                {/* <div className='allthesector'>sector 47 gurgaon</div>
                                 <div className='allthesector'>sector 47 gurgaon</div>
                                 <div className='allthesector'>sector 47 gurgaon</div>
-                                <div className='allthesector'>sector 47 gurgaon</div>
-                                <div className='allthesector'>sector 47 gurgaon</div>
+                                <div className='allthesector'>sector 47 gurgaon</div> */}
                             </div>
                             <div>
                                 <span>Budget</span>
                                 {/* <div className='flex justify-content mt-1'> */}
                                 <div className='min-max-flex'>
-                                    <h6 className='budget-btn'>{min1}</h6>
-                                    <h6 className='budget-btn'>{max1}+L</h6>
+                                    <h6 className='budget-btn'>{min1}L</h6>
+                                    <h6 className='budget-btn'>{max1}L</h6>
                                 </div>
                                 <div className='min-max'>
                                     <div className="inner-div">
@@ -158,8 +173,8 @@ function Filter() {
                             </div>
 
                             <div>
-                                {currentProperties?.map((property) => (
-                                    <PropertyCard key={property.id} property={property} />
+                                {currentProperties?.map((property, index) => (
+                                    <PropertyCard key={index} property={property} />
                                 ))}
 
                                 {/* Pagination */}

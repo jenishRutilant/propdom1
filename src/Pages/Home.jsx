@@ -89,65 +89,41 @@ const Home = () => {
       });
   }
 
+  const [sector, setSector] = useState([]);
+  const [area, setArea] = useState([]);
+  const [city, setCity] = useState([]);
+
+  let newSector = [];
+  let newArea = [];
+  let newCity = [];
+
   const handleSelectChange = (selectedOptions) => {
     setSelectedOptions(selectedOptions);
+
+
+    for (let index = 0; index < selectedOptions.length; index++) {
+      const element = selectedOptions[index].label;
+      const [sector12, area12, city12] = element.split(', ');
+
+      newSector.push(sector12)
+      newArea.push(area12)
+      newCity.push(city12)
+
+      setSector(newSector);
+      setArea(newArea);
+      setCity(newCity);
+    }
   };
-
-  const selectFunction = selectedOptions?.map(option => option.label);
-  const selectFunction1 = selectFunction.map(label => label.split(', '));
-
-  const [sector, setsector] = useState([])
-  const [area, setarea] = useState([])
-  const [city, setcity] = useState([])
 
   const saveDataToLocalStorage = () => {
-    localStorage.setItem('sectorData', JSON.stringify(sector));
-    localStorage.setItem('areaData', JSON.stringify(area));
-    localStorage.setItem('cityData', JSON.stringify(city));
+    localStorage.setItem('sectorData', sector);
+    localStorage.setItem('areaData', area);
+    localStorage.setItem('cityData', city);
   };
 
-  selectFunction1.forEach(obj => {
-    sector.push(obj[0]);
-    area.push(obj[1]);
-    city.push(obj[2]);
-  });
-
-  // const [property123, setProperty] = useState([])
-  // var searchData = {
-  //   sector: "Sector 42",
-  //   area: "Gurugram",
-  //   city: "Haryana"
-  // };
-
-  // const search = () => {
-  //   var data = {
-  //     "area": sector,
-  //     "city": area,
-  //     "state": city
-  //   };
-
-  //   var config = {
-  //     method: 'post',
-  //     maxBodyLength: Infinity,
-  //     url: apiConst.search,
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     },
-  //     data: data
-  //   };
-
-  //   axios(config)
-  //     .then(function (response) {
-  //       console.log(response.data);
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error);
-  //     });
-  // }
-  const filterPage = (e) => {
+  const filterPage = async (e) => {
     e.preventDefault();
     saveDataToLocalStorage();
-    // navigate('/filter')
     window.location.href = "/filter"
   }
 
