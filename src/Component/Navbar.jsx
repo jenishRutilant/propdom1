@@ -59,9 +59,9 @@ const Navbar = () => {
                         <span className="line line3"></span>
                     </div>
                     <ul className="menu-items">
-                        <NavLink to="/login" className={({ isActive }) => (isActive ? "active" : 'none')}><li>Login</li></NavLink>
-                        <NavLink to="/CustomerService" className={({ isActive }) => (isActive ? "active" : 'none')}><li>Customer Service</li></NavLink>
-                        <NavLink to="/plans" className={({ isActive }) => (isActive ? "active" : 'none')}><li>Plans</li></NavLink>
+                        <NavLink to="/login" className={({ isActive }) => (isActive ? "active123" : 'none')}><li>Login</li></NavLink>
+                        <NavLink to="/CustomerService" className={({ isActive }) => (isActive ? "active123" : 'none')}><li>Customer Service</li></NavLink>
+                        <NavLink to="/plans" className={({ isActive }) => (isActive ? "active123" : 'none')}><li>Plans</li></NavLink>
                         <button type="button" className="btn p-2 btn-warning" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Ask Query</button>
 
 
