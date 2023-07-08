@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import "../Style/Filter.css"
+import image from "../Assets/R.png"
 
 const Property = ({ property }) => {
-
-    const { area, name, original_price, sale_price, property_size, size, superBuiltUpArea, image_link } = property;
+    // image_link
+    const { area, city, measurement_unit, owner_name, name, original_price, sale_price, property_size, size, superBuiltUpArea } = property;
 
     const [h1, seth1] = useState()
     useEffect(() => {
@@ -13,18 +14,16 @@ const Property = ({ property }) => {
         seth1(JSON.parse(helloooo))
     }, []);
 
-    console.log(h1);
-
     return (
         <div className="allBorder">
             <div className="flex">
                 <div className="img-card">
                     <div className="card-pic">
-                        <img src={image_link} alt="image_link" className="img-fluid" />
+                        <img src={image} alt="image_link" className="img-fluid" />
                     </div>
                 </div>
                 <div className="card-information">
-                    <Link className='p-tag' to="/subpro">{area}</Link>
+                    <Link className='p-tag' to="/subpro">{area} / {city}</Link>
                     <p className='p-tag'>{name}</p>
                     <div className="flex gap">
                         <div className='main-price'>
@@ -34,17 +33,21 @@ const Property = ({ property }) => {
                                 <div className='original_price'> Sale Price: <span>₹{sale_price}</span></div>
                                 <br />
                             </div>
-                            <div className='original_price'> Property Size: <span>{property_size}</span></div>
+                            <div className='original_price'> Property Size: <span>{property_size} {measurement_unit}</span></div>
                         </div>
                         <div>
                             <h6 className="text-center">{size}</h6>
                             <span className='main-span'>{superBuiltUpArea}</span>
                         </div>
                     </div>
+                    <br />
                     <hr />
-                    <div className="flex justify-content align-items mt-3">
-                        <button className="btn-contact2">view phone number</button>
-                        <button className="btn-contact1">contact dealer</button>
+                    <div className="flex justify-content align-items">
+                        <button className="btn-contact2">View Phone Number</button>
+                        <button className="btn-contact1">Contact Dealer</button>
+                    </div>
+                    <div>
+                        <p className='on'>Owener Name: {!owner_name?"landDam":owner_name}</p>
                     </div>
                 </div>
             </div>

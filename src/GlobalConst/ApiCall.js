@@ -2,7 +2,7 @@ import axios from "axios";
 
 const ApiCall = async (method, url, data, headers, params) =>
     new Promise(async (resolve, reject) => {
-        const token = await localStorage.getItem("token");
+        const token = await localStorage.getItem("User_token");
         const options = {
             ...{
                 method,
@@ -10,7 +10,7 @@ const ApiCall = async (method, url, data, headers, params) =>
                 data,
                 params,
             },
-            ...(token && { headers: { "auth-token": token } }),
+            ...(token && { headers: { "authToken_user": token } }),
         };
         if (headers) {
             options.headers = { ...options.headers, ...headers };

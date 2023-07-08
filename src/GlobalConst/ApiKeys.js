@@ -16,7 +16,8 @@ const apiConst = {
   pro_list: `${BASE_URL}property/list`,
   search: `${BASE_URL}property/search`,
   pro_types:`${BASE_URL}propertyType/list/?categoryId`,
-  askquery:`${BASE_URL}supportManagement/sendEnquiries`
+  askquery:`${BASE_URL}supportManagement/sendEnquiries`,
+  addSlider:`${BASE_URL}slider/addSlider`
 };
 
 export default apiConst;

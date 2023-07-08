@@ -134,6 +134,10 @@
     display: none;
 }
 
+.allSlider{
+    display: flexfs;
+}
+
 @media (max-width: 768px) {
     .all-btns {
         padding: 7px;

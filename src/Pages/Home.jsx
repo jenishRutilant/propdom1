@@ -16,6 +16,7 @@ const Home = () => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     allList();
     allthelist();
+    slider();
   }, []);
 
   const [activeTag, setActiveTag] = useState();
@@ -57,10 +58,20 @@ const Home = () => {
       });
   }
 
-  const images = [
-    'https://i.imgur.com/SLhqvuO.jpeg',
-    'https://i.imgur.com/ha5D75D.jpeg',
-  ];
+  const [allSlider, serAlllider] = useState([])
+  console.log(allSlider[0]?.title);
+
+  const slider = () => {
+    ApiCall("get", apiConst.addSlider, null, null, null)
+      .then(function (response) {
+        serAlllider(response.data.sliders)
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  const images = [];
 
   const des = [
     'Luxury living awaits in our exquisite real estate flats, where elegance meets comfort,',
@@ -175,7 +186,14 @@ const Home = () => {
             </div>
           </form>
         </div>
-        <ImageSlider images={images} des={des} />
+        {/* {
+          allSlider?.map((item, index) => {
+            <div key={index}>
+              <p>{item[0]?.title}</p>
+            </div>
+          })
+        } */}
+        <ImageSlider images={allSlider} />
       </div>
       <Footer />
     </>

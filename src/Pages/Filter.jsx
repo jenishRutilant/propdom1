@@ -1,22 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import '../Style/Filter.css'
 import Navbar2 from '../Component/Navbar2'
 import Footer from '../Component/Footer'
 import PropertyCard from '../Pages/Property';
 import MultiRangeSlider from '../Pages/MultiRangeSlider'
-import axios from 'axios'
 import apiConst from '../GlobalConst/ApiKeys'
+import ApiCall from '../GlobalConst/ApiCall'
 
 function Filter() {
 
-    useEffect(() => {
-        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-        search();
-    }, []);
-
     const [min1, setmin] = useState(1);
     const [max1, setmax] = useState();
+    console.log(min1);
+
     const [min2, setmin2] = useState();
     const [max2, setmax2] = useState();
 
@@ -24,57 +21,83 @@ function Filter() {
     const areaData = localStorage.getItem('areaData');
     const cityData = localStorage.getItem('cityData');
 
-    const [lol, setlol] = useState()
+    const [lol, setlol] = useState([])
+    const [searchData, setsearchData] = useState([])
+    console.log(searchData);
+    const [size, setSize] = useState([])
 
-    const search = () => {
+    const search = useCallback(() => {
         var data = {
             area: sectorData.split(','),
             city: areaData.split(','),
-            state: cityData.split(',')
+            state: cityData.split(','),
         };
 
-        var config = {
-            method: 'post',
-            maxBodyLength: Infinity,
-            url: apiConst.search,
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            data: data
-        };
-
-        axios(config)
+        ApiCall("post", apiConst.search, data, null, null)
             .then(function (response) {
                 setlol(response.data.property)
+                setsearchData(response.data.property)
             })
             .catch(function (error) {
                 console.log(error);
             });
-    }
+    }, [areaData, sectorData, cityData])
 
     const [currentPage, setCurrentPage] = useState(1);
     const [propertiesPerPage] = useState(10);
 
     const indexOfLastProperty = currentPage * propertiesPerPage;
     const indexOfFirstProperty = indexOfLastProperty - propertiesPerPage;
-    const currentProperties = lol?.slice(indexOfFirstProperty, indexOfLastProperty);
+    // const currentProperties = lol?.slice(indexOfFirstProperty, indexOfLastProperty);
 
-    const totalPages = Math.ceil(lol?.length / propertiesPerPage);
+    const totalPages = Math.ceil(searchData?.length / propertiesPerPage);
+    console.log(totalPages);
 
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     };
-    const hello = (min, max) => {
+
+    // --------------- Search data-----------------
+    const onSearch = (min, max) => {
         setmin(min)
         setmax(max)
+        let minVal = min;
+        let maxVal = max;
+        let fData = lol?.filter((item) => {
+            const price = parseInt(item?.sale_price);
+            if (typeof price === 'number') {
+                return price >= minVal && price <= maxVal;
+            }
+            else {
+                alert("Please select")
+            }
+            return false;
+        });
+        setsearchData(fData)
+    }
+    // --------------- Search data-----------------
 
-    };
     const hello1 = (min, max) => {
-        setmin2(min)
-        setmax2(max)
-
+        let minVal = min;
+        let maxVal = max;
+        let fData = searchData?.filter((item) => {
+            const price = parseInt(item?.property_size);
+            if (typeof price === 'number') {
+                return price >= minVal && price <= maxVal;
+            }
+            else {
+                alert("Please select")
+            }
+            return false;
+        });
+        setSize(fData)
     };
+
+    useEffect(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+        search();
+    }, []);
 
     return (
         <>
@@ -94,30 +117,22 @@ function Filter() {
                                 <div className='allthesector'>sector 47 gurgaon</div>
                                 <div className='allthesector'>sector 47 gurgaon</div>
                                 <div className='allthesector'>sector 47 gurgaon</div>
-                                {/* <div className='allthesector'>sector 47 gurgaon</div>
-                                <div className='allthesector'>sector 47 gurgaon</div>
-                                <div className='allthesector'>sector 47 gurgaon</div>
-                                <div className='allthesector'>sector 47 gurgaon</div> */}
                             </div>
                             <div>
                                 <span>Budget</span>
-                                {/* <div className='flex justify-content mt-1'> */}
                                 <div className='min-max-flex'>
                                     <h6 className='budget-btn'>{min1}L</h6>
                                     <h6 className='budget-btn'>{max1}L</h6>
                                 </div>
                                 <div className='min-max'>
                                     <div className="inner-div">
-                                        <MultiRangeSlider min={1} max={100} onChange={({ min, max }) => hello(min, max)} />
-                                        {/* <MultiRangeSlider min={0} max={100000} onChange={({ min, max }) => setmin(min)} /> */}
+                                        <MultiRangeSlider min={0} max={100000000} onChange={({ min, max }) => onSearch(min, max)} />
                                     </div>
                                 </div>
-
                             </div>
                             <hr />
                             <h6>Property Type</h6>
                             <div className='property-btn'>
-                                {/* <i className="fa-solid fa-bars-staggered"></i> */}
                                 <div>Residential Apartment</div>
                                 <div>Builder Floor</div>
                                 <div>Residential Land</div>
@@ -174,9 +189,21 @@ function Filter() {
                             </div>
 
                             <div>
-                                {currentProperties?.map((property, index) => (
-                                    <PropertyCard key={index} property={property} />
-                                ))}
+                                {
+                                    searchData.length > 0 ? (
+                                        (searchData?.slice(indexOfFirstProperty, indexOfLastProperty)?.map((property, index) => (
+                                            <PropertyCard key={index} property={property} />
+                                        )))) : (
+                                        (size?.map((property, index) => (
+                                            <PropertyCard key={index} property={property} />
+                                        )))
+                                    )
+                                }
+                                {/* {
+                                    searchData?.slice(indexOfFirstProperty, indexOfLastProperty)?.map((property, index) => (
+                                        <PropertyCard key={index} property={property} />
+                                    ))
+                                } */}
 
                                 {/* Pagination */}
                                 <div className="pagination">
