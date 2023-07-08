@@ -5,7 +5,7 @@ import Navbar2 from '../Component/Navbar2'
 import Footer from '../Component/Footer'
 import PropertyCard from '../Pages/Property';
 import MultiRangeSlider from '../Pages/MultiRangeSlider'
-import axios, { all } from 'axios'
+import axios from 'axios'
 import apiConst from '../GlobalConst/ApiKeys'
 
 function Filter() {
