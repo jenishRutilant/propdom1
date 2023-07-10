@@ -137,7 +137,7 @@ const Home = () => {
       <ToastContainer />
       <div className="main-div-home">
         <div className='banner-img'>
-          <img src={require("../Assets/banner.jpg")} alt=" " />
+          <img src={require("../Assets/city2.jpg")} alt=" " />
         </div>
         <div className="center-btns">
           {

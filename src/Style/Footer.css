@@ -190,6 +190,31 @@
   border-radius: 9px;
 }
 
+.model-box {
+  /* background-color: #ebeff4d7; */
+}
+
+.btn-close {
+  color: white;
+  background-color: rgb(244, 246, 248);
+}
+
+.footer-model {
+  text-transform: capitalize;
+  font-family: sans-serif;
+  color:black;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+.footer-model-title {
+  color:black;
+  padding: 10px;
+  border-radius: 10px;
+  text-transform: capitalize;
+}
+
 @media screen and (max-width: 1119px) {
   .inner-info {
     max-width: 650px;
