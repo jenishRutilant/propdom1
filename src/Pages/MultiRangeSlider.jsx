@@ -4,12 +4,9 @@ import PropTypes from "prop-types";
 import "../Style/multiRangeSlider.css";
 
 const MultiRangeSlider = ({ min, max, onChange}) => {
-  console.log(onChange,"onChange")
   const [minVal, setMinVal] = useState(min);
-  console.log(minVal,"min")
   const [maxVal, setMaxVal] = useState(max);
   const minValRef = useRef(null);
-  console.log(maxVal  ,"max")
   const maxValRef = useRef(null);
   const range = useRef(null);
 

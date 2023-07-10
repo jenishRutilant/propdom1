@@ -6,6 +6,7 @@ import image from "../Assets/R.png"
 const Property = ({ property }) => {
     // image_link
     const { area, city, measurement_unit, owner_name, propertyName, original_price, sale_price, property_size, size, superBuiltUpArea } = property;
+    console.log(city);
 
     const [h1, seth1] = useState()
     useEffect(() => {

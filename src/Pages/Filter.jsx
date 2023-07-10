@@ -18,9 +18,9 @@ function Filter() {
     const [min2, setmin2] = useState();
     const [max2, setmax2] = useState();
 
-    const [filterData,setFilterData] = useState({
-        proprtyyType :"",
-        area:false
+    const [filterData, setFilterData] = useState({
+        proprtyyType: "",
+        area: false
     })
 
     const sectorData = localStorage.getItem('sectorData');
@@ -67,70 +67,32 @@ function Filter() {
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     };
 
-    // useEffect(() => {
-    //     // debugger
-    //     let newData = searchData.filter((item) => item.property_size >= min1 && item.property_size <= max1);
-    //     console.log(newData, "newdata");
 
-    // }, [min1, max1, searchData]);
-
-
-
-    // --------------- Search data-----------------
-    // const onSearch = (min, max) => {
-    //     setmin(min)
-    //     setmax(max)
-    //     let minVal = min;
-    //     let maxVal = max;
-    //     let fData = lol?.filter((item) => {
-    //         const price = parseInt(item?.sale_price);
-    //         if (typeof price === 'number') {
-    //             return price >= minVal && price <= maxVal;
-    //         }
-    //         else {
-    //             alert("Please select")
-    //         }
-    //         return false;
-    //     });
-    //     setsearchData(fData)
-    // }
-    // --------------- Search data-----------------
+    const onSearch = (min, max) => {
+        let newData = searchData.filter((item) => item.sale_price >= min && item.sale_price <= max);
+        console.log(newData, "search");
+        // setFilterData(newData);
+    };
 
     const hello1 = (min, max) => {
-        setFilterData({...filterData,area:true})
-        // debugger;   
-        // let minVal = min;
-        // let maxVal = max;
-        // let fData = searchData?.filter((item) => {
-        //     const price = parseInt(item?.property_size);
-        //     if (typeof price === 'number') {
-        //         return price >= minVal && price <= maxVal;
-        //     }
-        //     else {
-        //         alert("Please select")
-        //     }
-        //     return false;
-        // });
-        // setSize(fData)
-        console.log("Min:", min);
-        // setmin(min)
-        console.log("Max:", max);
-        // setmax(max)
-        let newData = []
-        if(filterData.area){
-            let newData = searchData.filter((item) => item.property_size >= min && item.property_size <= max );
-            console.log(newData, "hyy");
-        }else if(filterData.)
-        setFilterData
-        // let newData = searchData.filter((item) =>console.log(item,"hyy") );
-SecurityUpdateWarningTwoTone(newData)
-return 
+        let newData = searchData.filter((item) => item.property_size >= min && item.property_size <= max);
+        console.log(newData, "hyy");
+    };
+
+    const allBhk = (value) => {
+        let newData = searchData.filter((item) => item.bed === value);
+        console.log(newData, "bhk");
+    };
+
+    const status = (value) => {
+        let newData = searchData.filter((item) => item.property_status === value);
+        console.log(newData, "property_status");
     };
 
     useEffect(() => {
         hello1()
     }, [min1, max1, min2, max2])
-    
+
 
     const allList = () => {
         ApiCall("get", apiConst.list, null, null, null)
@@ -175,13 +137,13 @@ return
                                 </div>
                                 <div className='min-max'>
                                     <div className="inner-div">
-                                        {/* <MultiRangeSlider min={0} max={100000000} onChange={({ min, max }) => onSearch(min, max)} /> */}
+                                        <MultiRangeSlider min={0} max={100000000} onChange={onSearch} />
                                     </div>
                                 </div>
                             </div>
                             <hr />
-                            <h6>Property Type</h6>
-                            <div className='property-btn' style={{cursor: "pointer"}}>
+                            {/* <h6>Property Type</h6>
+                            <div className='property-btn' style={{ cursor: "pointer" }}>
                                 {
                                     category?.map((item, i) => (
                                         <div key={i} >
@@ -190,24 +152,24 @@ return
                                     ))
                                 }
                             </div>
-                            <hr />
+                            <hr /> */}
                             <h6>No. of Bedrooms</h6>
                             <div className='bedrooms-btn'>
-                                <div>1Rk/ 1Bhk</div>
-                                <div>2Bhk</div>
-                                <div>3Bhk</div>
-                                <div>4Bhk</div>
-                                <div>5Bhk</div>
+                                <div onClick={() => allBhk('1')}>1BHK</div>
+                                <div onClick={() => allBhk('2')}>2Bhk</div>
+                                <div onClick={() => allBhk('3')}>3Bhk</div>
+                                <div onClick={() => allBhk('4')}>4Bhk</div>
+                                <div onClick={() => allBhk('5')}>5Bhk</div>
                             </div>
                             <hr />
-                            <h6>Posted by</h6>
+                            {/* <h6>Posted by</h6>
                             <div className='posted-btn'>
                                 <div>owner</div>
                                 <div>builder</div>
                                 <div>dealer</div>
                                 <div>feature dealer</div>
                             </div>
-                            <hr />
+                            <hr /> */}
                             <div>
                                 <span>Area <br />sq.ft.</span>
                                 <div className='min-max-flex'>
@@ -219,24 +181,24 @@ return
                                 </div>
                             </div>
                             <hr />
-                            <h6>Localities</h6>
+                            {/* <h6>Localities</h6>
                             <div className='posted-btn'>
                                 <div>owner</div>
                                 <div>builder</div>
                                 <div>dealer</div>
                                 <div>feature dealer</div>
-                            </div>
+                            </div> */}
                         </div>
 
                         {/* Filter */}
 
                         <div className='right-card'>
                             <div className='category-btn'>
-                                <button>all</button>
-                                <button>ower</button>
-                                <button>verified</button>
-                                <button>under construcation</button>
-                                <button>ready to move</button>
+                                <button onClick={() => status("all")}>all</button>
+                                <button onClick={() => status("owner")}>owner</button>
+                                <button onClick={() => status("verified")}>verified</button>
+                                <button onClick={() => status("underConstrucation")}>under construcation</button>
+                                <button onClick={() => status("readyToMove")}>ready to move</button>
                             </div>
 
                             <div>
