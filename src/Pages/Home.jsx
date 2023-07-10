@@ -71,13 +71,6 @@ const Home = () => {
       });
   }
 
-  const images = [];
-
-  const des = [
-    'Luxury living awaits in our exquisite real estate flats, where elegance meets comfort,',
-    'Luxury living awaits in our exquisite real estate flats, where elegance meets comfort',
-  ]
-
   const [disablebtn, setdisablebtn] = useState(true)
 
   const handleClick = (tabIndex, categoryId) => {

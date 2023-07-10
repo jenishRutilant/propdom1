@@ -5,7 +5,7 @@ import image from "../Assets/R.png"
 
 const Property = ({ property }) => {
     // image_link
-    const { area, city, measurement_unit, owner_name, name, original_price, sale_price, property_size, size, superBuiltUpArea } = property;
+    const { area, city, measurement_unit, owner_name, propertyName, original_price, sale_price, property_size, size, superBuiltUpArea } = property;
 
     const [h1, seth1] = useState()
     useEffect(() => {
@@ -24,7 +24,7 @@ const Property = ({ property }) => {
                 </div>
                 <div className="card-information">
                     <Link className='p-tag' to="/subpro">{area} / {city}</Link>
-                    <p className='p-tag'>{name}</p>
+                    <p className='p-name'>{propertyName}</p>
                     <div className="flex gap">
                         <div className='main-price'>
                             <div className="both-price">

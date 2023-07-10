@@ -35,12 +35,6 @@ function Subpro() {
                         <h2>advertisment area</h2>
                     </div>
                 </div>
-                <div>
-                    <ul className='overview'>
-                        <li><Link to="#"> overview</Link></li>
-                        <li>owner details</li>
-                    </ul>
-                </div>
             </div>
             <hr />
             <div className="container12">
