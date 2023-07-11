@@ -10,11 +10,10 @@ const ImageSlider = ({ images }) => {
 
     const options = {
         items: 1,
-        // loop: true,
+        loop: true,
         margin: 10,
-        nav: true,
-        // autoplay: true,
-        // autoplayTimeout: 3000
+        autoplay: true,
+        autoplayTimeout: 2000
     };
 
     return (

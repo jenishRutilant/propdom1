@@ -7,7 +7,7 @@ import axios from 'axios'
 
 
 const Navbar = () => {
-
+    const userdata = localStorage.getItem('User_token')
     const refColse = useRef()
     const [QueryAsk, setQueryAsk] = useState({
         message: '',
@@ -17,12 +17,12 @@ const Navbar = () => {
     }
     const addMessage = (e) => {
         // e.preventDefault();
-        
-        
+
+
         var data = JSON.stringify({
             "description": QueryAsk.message
         });
-        
+
         var config = {
             method: 'post',
             maxBodyLength: Infinity,
@@ -34,20 +34,19 @@ const Navbar = () => {
             data: data
         };
         // alert(config.data)
-        console.log(QueryAsk);        
-        
+        console.log(QueryAsk);
+
         axios(config)
-        .then(function (response) {
-            if(response.data.status)
-            {
-                refColse.current.click()
-            }
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-      }
-    
+            .then(function (response) {
+                if (response.data.status) {
+                    refColse.current.click()
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
     return (
         <>
             <nav className="navbar">
@@ -59,13 +58,14 @@ const Navbar = () => {
                         <span className="line line3"></span>
                     </div>
                     <ul className="menu-items">
-                        <NavLink to="/login" className={({ isActive }) => (isActive ? "active123" : 'none')}><li>Login</li></NavLink>
-                        <NavLink to="/CustomerService" className={({ isActive }) => (isActive ? "active123" : 'none')}><li>Customer Service</li></NavLink>
-                        <NavLink to="/plans" className={({ isActive }) => (isActive ? "active123" : 'none')}><li>Plans</li></NavLink>
-                        <button type="button" className="btn p-2 btn-warning" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Ask Query</button>
-
-
-
+                        <NavLink to="/plans" className={({ isActive }) => (isActive ? "active" : 'none')}><li>Plans</li></NavLink>
+                        <NavLink to="/CustomerService" className={({ isActive }) => (isActive ? "active" : 'none')}><li>Customer Service</li></NavLink>
+                        <NavLink to="/login" className={({ isActive }) => (isActive ? "active" : 'none')}><li>Login</li></NavLink>
+                        {!userdata ? (
+                            <></>
+                        ) : (
+                            <button type="button" className="btn p-2 btn-warning" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Ask Query</button>
+                        )}
                     </ul>
                     <Link style={{ zIndex: "0" }} to='/'><img src={require("../Assets/R.png")} alt="" className="logo123" /></Link>
                 </div>
@@ -84,10 +84,10 @@ const Navbar = () => {
                                 <form>
                                     <div className="form-group">
                                         <label htmlFor="recipient-name" className="col-form-label">Description : </label>
-                                       
+
                                     </div>
                                     <div className="form-group">
-                                        <textarea className="form-control" id="message-text" name="message" defaultValue={""} onChange={onChange}/>
+                                        <textarea className="form-control" id="message-text" name="message" defaultValue={""} onChange={onChange} />
                                     </div>
                                 </form>
                             </div>

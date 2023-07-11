@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import "../Style/Filter.css"
 import image from "../Assets/R.png"
 
 const Property = ({ property }) => {
     // image_link
-    const { area, city, measurement_unit, owner_name, propertyName, original_price, sale_price, property_size, size, superBuiltUpArea } = property;
-    console.log(city);
-
+    const { area, city, measurement_unit, owner_name, propertyName, original_price, sale_price, property_size, size, superBuiltUpArea, _id } = property;
     const [h1, seth1] = useState()
+    const navi = useNavigate();
+    const onId = (id) => {
+        console.log(id);
+        sessionStorage.setItem('image_link', JSON.stringify(id))
+        navi("/subpro")
+    }
+
     useEffect(() => {
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
         const helloooo = localStorage.getItem('propertyData')
@@ -17,14 +22,14 @@ const Property = ({ property }) => {
 
     return (
         <div className="allBorder">
-            <div className="flex">
+            <div className="flex" style={{ cursor: "pointer" }} onClick={() => onId(property)}>
                 <div className="img-card">
                     <div className="card-pic">
                         <img src={image} alt="image_link" className="img-fluid" />
                     </div>
                 </div>
                 <div className="card-information">
-                    <Link className='p-tag' to="/subpro">{area} / {city}</Link>
+                    <div className='p-tag'>{area}</div>
                     <p className='p-name'>{propertyName}</p>
                     <div className="flex gap">
                         <div className='main-price'>
@@ -48,7 +53,7 @@ const Property = ({ property }) => {
                         <button className="btn-contact1">Contact Dealer</button>
                     </div>
                     <div>
-                        <p className='on'>Owener Name: {!owner_name?"landDam":owner_name}</p>
+                        <p className='on'>Owener Name: {!owner_name ? "landDam" : owner_name}</p>
                     </div>
                 </div>
             </div>

@@ -7,34 +7,29 @@ import PropertyCard from '../Pages/Property';
 import MultiRangeSlider from '../Pages/MultiRangeSlider'
 import apiConst from '../GlobalConst/ApiKeys'
 import ApiCall from '../GlobalConst/ApiCall'
-import axios from 'axios'
 
 function Filter() {
 
-    const [min1, setmin] = useState(1);
+    const [min1, setmin] = useState();
     const [max1, setmax] = useState();
-    console.log(min1);
-
     const [min2, setmin2] = useState();
     const [max2, setmax2] = useState();
 
-    const [filterData, setFilterData] = useState({
-        proprtyyType: "",
-        area: false
-    })
+    const [filterData, setFilterData] = useState()
 
     const sectorData = localStorage.getItem('sectorData');
     const areaData = localStorage.getItem('areaData');
     const cityData = localStorage.getItem('cityData');
 
-    const [lol, setlol] = useState([])
+    const [getData, setGetData] = useState([])
     const [searchData, setsearchData] = useState([])
-    console.log(searchData);
-    const [size, setSize] = useState([])
-    console.log(searchData, "size")
-    console.log(size, "size")
+    console.log(searchData, "filterData")
     const [category, setCategory] = useState([]);
+    const [BHK, setBHK] = useState("")
+    const [upperStatus, setUpperStatus] = useState("")
 
+
+    // ------------- get data --------------------
     const search = useCallback(() => {
         var data = {
             area: sectorData.split(','),
@@ -44,13 +39,14 @@ function Filter() {
 
         ApiCall("post", apiConst.search, data, null, null)
             .then(function (response) {
-                setlol(response.data.property)
                 setsearchData(response.data.property)
+                setGetData(response.data.property)
             })
             .catch(function (error) {
                 console.log(error);
             });
     }, [areaData, sectorData, cityData])
+    // ------------- get data --------------------
 
     const [currentPage, setCurrentPage] = useState(1);
     const [propertiesPerPage] = useState(10);
@@ -60,38 +56,68 @@ function Filter() {
     // const currentProperties = lol?.slice(indexOfFirstProperty, indexOfLastProperty);
 
     const totalPages = Math.ceil(searchData?.length / propertiesPerPage);
-    console.log(totalPages);
 
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     };
 
+    useEffect(() => {
+        if (searchData) {
+            if (upperStatus !== "") {
+                let newData = searchData.filter((item) => item.property_status === upperStatus);
+                return setsearchData(newData);
+            }
+
+            if (BHK !== "") {
+                let newData = searchData.filter((item) => item.bed === BHK);
+                return setsearchData(newData);
+            }
+
+            if (min1 !== undefined && max1 !== undefined) {
+                console.log(min1, max1);
+                let newData = searchData.filter((item) => item.sale_price >= min1 && item.sale_price <= max1);
+                console.log(newData);
+                return setsearchData(newData);
+            }
+
+            if (min2 !== undefined && max2 !== undefined) {
+                let newData1 = searchData.filter((item) => (
+                    Math.floor(item.property_size) >= min2 && Math.floor(item.property_size) <= max2
+                ));
+                console.log(newData1);
+                return setsearchData(newData1);
+            }
+
+        }
+
+    }, [BHK, min1, max1, min2, max2, upperStatus])
 
     const onSearch = (min, max) => {
-        let newData = searchData.filter((item) => item.sale_price >= min && item.sale_price <= max);
-        console.log(newData, "search");
-        // setFilterData(newData);
+        setmin(min)
+        setmax(max)
+        // let newData = searchData.filter((item) => item.sale_price >= min && item.sale_price <= max);
+        // setSlider(min, max);
     };
 
     const hello1 = (min, max) => {
-        let newData = searchData.filter((item) => item.property_size >= min && item.property_size <= max);
-        console.log(newData, "hyy");
+        setmin2(min)
+        setmax2(max)
+        // setSlider1(min, max)
+        // let newData = searchData.filter((item) => item.property_size >= min && item.property_size <= max);
+        // setsearchData(newData)
     };
 
     const allBhk = (value) => {
-        let newData = searchData.filter((item) => item.bed === value);
-        console.log(newData, "bhk");
+        // let newData = searchData.filter((item) => item.bed === value);
+        setBHK(value)
     };
 
-    const status = (value) => {
-        let newData = searchData.filter((item) => item.property_status === value);
-        console.log(newData, "property_status");
+    const status = (value, tabIndex) => {
+        // let newData = searchData.filter((item) => item.property_status === value);
+        setUpperStatus(value)
+        setActiveTag(tabIndex);
     };
-
-    useEffect(() => {
-        hello1()
-    }, [min1, max1, min2, max2])
 
 
     const allList = () => {
@@ -102,6 +128,17 @@ function Filter() {
             .catch(function (error) {
                 console.log(error);
             });
+    }
+
+    const onClick = () => {
+        window.location.reload();
+    }
+
+    const allsector = localStorage.getItem('sectorData').split(',');
+    const [activeTag, setActiveTag] = useState();
+
+    const handleClick = (tabIndex) => {
+
     }
 
     useEffect(() => {
@@ -122,13 +159,13 @@ function Filter() {
                         <div className='sidebar'>
                             <div className='flex justify-content align-items'>
                                 <h6 className='a-f'>Applied Filters</h6>
-                                <Link to="#">clear all</Link>
+                                <Link to="#" onClick={onClick}>clear all</Link>
                             </div>
-                            <div className=''>
-                                <div className='allthesector'>sector 47 gurgaon</div>
-                                <div className='allthesector'>sector 47 gurgaon</div>
-                                <div className='allthesector'>sector 47 gurgaon</div>
-                            </div>
+                            {allsector?.map((item, index) => (
+                                <div key={index}>
+                                    <div className="allthesector"> {item}</div>
+                                </div>
+                            ))}
                             <div>
                                 <span>Budget</span>
                                 <div className='min-max-flex'>
@@ -155,11 +192,11 @@ function Filter() {
                             <hr /> */}
                             <h6>No. of Bedrooms</h6>
                             <div className='bedrooms-btn'>
-                                <div onClick={() => allBhk('1')}>1BHK</div>
-                                <div onClick={() => allBhk('2')}>2Bhk</div>
-                                <div onClick={() => allBhk('3')}>3Bhk</div>
-                                <div onClick={() => allBhk('4')}>4Bhk</div>
-                                <div onClick={() => allBhk('5')}>5Bhk</div>
+                                <div style={{ cursor: "pointer", color: activeTag === '1' ? '2px solid red' : '1px solid black' }} onClick={() => allBhk('1')}>1BHK</div>
+                                <div style={{ cursor: "pointer", color: activeTag === '2' ? '2px solid red' : '1px solid black' }} onClick={() => allBhk('2')}>2BHK</div>
+                                <div style={{ cursor: "pointer", color: activeTag === '3' ? '2px solid red' : '1px solid black' }} onClick={() => allBhk('3')}>3BHK</div>
+                                <div style={{ cursor: "pointer", color: activeTag === '4' ? '2px solid red' : '1px solid black' }} onClick={() => allBhk('4')}>4BHK</div>
+                                <div style={{ cursor: "pointer", color: activeTag === '5' ? '2px solid red' : '1px solid black' }} onClick={() => allBhk('5')}>5BHK</div>
                             </div>
                             <hr />
                             {/* <h6>Posted by</h6>
@@ -194,29 +231,38 @@ function Filter() {
 
                         <div className='right-card'>
                             <div className='category-btn'>
-                                <button onClick={() => status("all")}>all</button>
-                                <button onClick={() => status("owner")}>owner</button>
-                                <button onClick={() => status("verified")}>verified</button>
-                                <button onClick={() => status("underConstrucation")}>under construcation</button>
-                                <button onClick={() => status("readyToMove")}>ready to move</button>
+                                <button onClick={() => status("All")}>all</button>
+                                <button onClick={() => status("Owner")}>owner</button>
+                                <button onClick={() => status("Verified")}>verified</button>
+                                <button onClick={() => status("UnderConstrucation")}>under construcation</button>
+                                <button onClick={() => status("ReadyToMove")}>ready to move</button>
                             </div>
 
                             <div>
-                                {
-                                    searchData.length > 0 ? (
-                                        (searchData?.slice(indexOfFirstProperty, indexOfLastProperty)?.map((property, index) => (
-                                            <PropertyCard key={index} property={property} />
-                                        )))) : (
-                                        (size?.map((property, index) => (
-                                            <PropertyCard key={index} property={property} />
-                                        )))
-                                    )
-                                }
                                 {/* {
+                                    (BHK === '' || upperStatus === '' || max2 === '' || min2 === '' || max1 === '' || min1 === '' || searchData?.length < 0 || filterData?.length === 0) ?
+                                    searchData?.slice(indexOfFirstProperty, indexOfLastProperty)?.map((property, index) => (
+                                            <PropertyCard key={index} property={property} />
+                                        )) : searchData?.slice(indexOfFirstProperty, indexOfLastProperty)?.map((property, index) => (
+                                            <PropertyCard key={index} property={property} />
+                                        ))
+
+                                } */}
+
+                                {
+
                                     searchData?.slice(indexOfFirstProperty, indexOfLastProperty)?.map((property, index) => (
                                         <PropertyCard key={index} property={property} />
                                     ))
+
+                                }
+
+                                {/* {
+                                    (BHK !== '' || max2 !== '' && min2 !== '') && filterData?.length !== 0 && filterData?.map((property, index) => (
+                                        <PropertyCard key={index} property={property} />
+                                    ))
                                 } */}
+
 
                                 {/* Pagination */}
                                 <div className="pagination">
