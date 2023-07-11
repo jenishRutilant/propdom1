@@ -2,7 +2,7 @@
     padding: 30px 0;
 }
 
-.bedrooms-btn{
+.bedrooms-btn {
     text-align: center;
 }
 
@@ -103,7 +103,7 @@
     box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
 }
 
-.on{
+.on {
     margin: 0;
 }
 
@@ -132,11 +132,11 @@
     font-size: 14px;
 }
 
-.original_price{
+.original_price {
     font-size: 18px;
 }
 
-.none-hover:hover{
+.none-hover:hover {
     color: black;
 }
 
@@ -203,6 +203,10 @@
     margin-top: 20px;
 }
 
+.active-filter {
+    background-color: orange !important;
+}
+
 .pagination button.active {
     background-color: orange;
     color: white;
@@ -225,7 +229,7 @@
     width: 100%;
 }
 
-.allBorder{
+.allBorder {
     border: 1px solid;
     border-radius: 10px;
     margin-top: 40px;

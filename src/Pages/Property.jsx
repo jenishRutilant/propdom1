@@ -2,16 +2,51 @@ import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import "../Style/Filter.css"
 import image from "../Assets/R.png"
+import apiConst from '../GlobalConst/ApiKeys';
+import axios from 'axios';
+import ApiCall from '../GlobalConst/ApiCall';
 
 const Property = ({ property }) => {
     // image_link
-    const { area, city, measurement_unit, owner_name, propertyName, original_price, sale_price, property_size, size, superBuiltUpArea, _id } = property;
+    const { area, measurement_unit, owner_name, propertyName, original_price, sale_price, property_size, size, superBuiltUpArea, _id } = property;
+    const id1 = JSON.parse(sessionStorage.getItem('User_token'))
     const [h1, seth1] = useState()
     const navi = useNavigate();
     const onId = (id) => {
-        console.log(id);
         sessionStorage.setItem('image_link', JSON.stringify(id))
         navi("/subpro")
+    }
+
+    const [contact, setcontact] = useState("Contact Delader")
+
+    const contactD = (id) => {
+        ApiCall("post", apiConst.checkisSubscribed + id, null, null, null)
+            .then(function (response) {
+                if (response.data.isSubscribed === true) {
+                    setcontact(response.data.ownerContact);
+                }
+                else {
+                    alert('Subscribe First')
+                    navi('/plans')
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
+    const please = () => {
+        alert('Please Login First');
+        navi('/login')
+    }
+
+    const finalF = () => {
+        if (localStorage.getItem("User_token")) {
+            contactD(_id)
+        }
+        else {
+            please()
+        }
     }
 
     useEffect(() => {
@@ -22,16 +57,16 @@ const Property = ({ property }) => {
 
     return (
         <div className="allBorder">
-            <div className="flex" style={{ cursor: "pointer" }} onClick={() => onId(property)}>
-                <div className="img-card">
+            <div className="flex">
+                <div className="img-card" style={{ cursor: "pointer" }} onClick={() => onId(property)}>
                     <div className="card-pic">
                         <img src={image} alt="image_link" className="img-fluid" />
                     </div>
                 </div>
                 <div className="card-information">
-                    <div className='p-tag'>{area}</div>
-                    <p className='p-name'>{propertyName}</p>
-                    <div className="flex gap">
+                    <div className='p-tag' style={{ cursor: "pointer" }} onClick={() => onId(property)}>{area}</div>
+                    <p className='p-name' style={{ cursor: "pointer" }} onClick={() => onId(property)}>{propertyName}</p>
+                    <div className="flex gap" style={{ cursor: "pointer" }} onClick={() => onId(property)}>
                         <div className='main-price'>
                             <div className="both-price">
                                 <div className='original_price'> Original Price: <span>₹{original_price}</span></div>
@@ -50,7 +85,7 @@ const Property = ({ property }) => {
                     <hr />
                     <div className="flex justify-content align-items">
                         <button className="btn-contact2">View Phone Number</button>
-                        <button className="btn-contact1">Contact Dealer</button>
+                        <div className="btn-contact1" style={{ cursor: "pointer" }} onClick={finalF}>{contact}</div>
                     </div>
                     <div>
                         <p className='on'>Owener Name: {!owner_name ? "landDam" : owner_name}</p>

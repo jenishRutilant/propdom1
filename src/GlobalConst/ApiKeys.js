@@ -15,9 +15,10 @@ const apiConst = {
   list: `${BASE_URL}category/list`,
   pro_list: `${BASE_URL}property/list`,
   search: `${BASE_URL}property/search`,
-  pro_types:`${BASE_URL}propertyType/list/?categoryId`,
-  askquery:`${BASE_URL}supportManagement/sendEnquiries`,
-  addSlider:`${BASE_URL}slider/addSlider`
+  pro_types: `${BASE_URL}propertyType/list/?categoryId`,
+  askquery: `${BASE_URL}supportManagement/sendEnquiries`,
+  addSlider: `${BASE_URL}slider/addSlider`,
+  checkisSubscribed: `${BASE_URL}agent/checkisSubscribed/`,
 };
 
 export default apiConst;
