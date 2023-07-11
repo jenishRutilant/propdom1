@@ -3,18 +3,17 @@ import { Link, useNavigate } from 'react-router-dom';
 import "../Style/Filter.css"
 import image from "../Assets/R.png"
 import apiConst from '../GlobalConst/ApiKeys';
-import axios from 'axios';
 import ApiCall from '../GlobalConst/ApiCall';
 
 const Property = ({ property }) => {
     // image_link
     const { area, measurement_unit, owner_name, propertyName, original_price, sale_price, property_size, size, superBuiltUpArea, _id } = property;
-    const id1 = JSON.parse(sessionStorage.getItem('User_token'))
     const [h1, seth1] = useState()
     const navi = useNavigate();
     const onId = (id) => {
         sessionStorage.setItem('image_link', JSON.stringify(id))
-        navi("/subpro")
+        console.log(id);
+        // navi("/subpro")
     }
 
     const [contact, setcontact] = useState("Contact Delader")

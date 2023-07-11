@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import '../Style/Filter.css'
-import Navbar2 from '../Component/Navbar2'
 import Footer from '../Component/Footer'
 import PropertyCard from '../Pages/Property';
 import MultiRangeSlider from '../Pages/MultiRangeSlider'
@@ -44,6 +43,7 @@ function Filter() {
                 console.log(error);
             });
     }, [areaData, sectorData, cityData])
+
     // ------------- get data --------------------
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -131,6 +131,12 @@ function Filter() {
     const allsector = localStorage.getItem('sectorData').split(',');
     const [activeTag, setActiveTag] = useState();
 
+    const shortData = (e) => {
+        let search = e.target.value;
+        let fData = searchData?.filter((item) => item?.city?.toLowerCase().indexOf(search?.toLowerCase()) !== -1)
+        setFilterData(fData);
+    }
+
     useEffect(() => {
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
         search();
@@ -149,7 +155,7 @@ function Filter() {
                     </div>
                     <ul className="menu-items1234">
                         <div className='flex align-items-center'>
-                            <input type="text" className='' placeholder='Search By Locality' />
+                            <input type="text" className='' placeholder='Search By Locality' onChange={shortData} />
                             <i className="fa-solid fa-magnifying-glass search-123"></i>
                         </div>
                         <div className="pokl">
@@ -281,13 +287,13 @@ function Filter() {
 
                             <div>
                                 {
-                                    filterData?.length === 0 ?
-                                        upperStatus === '' && BHK === '' && filterData?.slice(indexOfFirstProperty, indexOfLastProperty)?.map((property, index) => (
-                                            <PropertyCard key={index} property={property} />
-                                        )) : searchData?.slice(indexOfFirstProperty, indexOfLastProperty)?.map((property, index) => (
-                                            <PropertyCard key={index} property={property} />
-                                        ))
-
+                                    // filterData?.length === 0 ?
+                                    BHK === '' && upperStatus === '' && filterData?.slice(indexOfFirstProperty, indexOfLastProperty)?.map((property, index) => (
+                                        <PropertyCard key={index} property={property} />
+                                    ))
+                                    // : filterData?.slice(indexOfFirstProperty, indexOfLastProperty)?.map((property, index) => (
+                                    //     <PropertyCard key={index} property={property} />
+                                    // ))
                                 }
 
                                 {/* {
@@ -298,11 +304,11 @@ function Filter() {
 
                                 } */}
 
-                                {/* {
-                                    (BHK !== '' && max2 !== '' && min2 !== '' && upperStatus !== '') && filterData?.length !== 0 && filterData?.map((property, index) => (
+                                {
+                                    (BHK !== '' && upperStatus !== '') && filterData?.map((property, index) => (
                                         <PropertyCard key={index} property={property} />
                                     ))
-                                } */}
+                                }
 
 
                                 {/* Pagination */}
