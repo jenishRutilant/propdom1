@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import "../Style/Filter.css"
 import image from "../Assets/R.png"
 import apiConst from '../GlobalConst/ApiKeys';
@@ -9,6 +9,7 @@ const Property = ({ property }) => {
     // image_link
     const { area, measurement_unit, owner_name, propertyName, original_price, sale_price, property_size, size, superBuiltUpArea, _id } = property;
     const [h1, seth1] = useState()
+    console.log(h1);
     const navi = useNavigate();
     const onId = (id) => {
         sessionStorage.setItem('image_link', JSON.stringify(id))

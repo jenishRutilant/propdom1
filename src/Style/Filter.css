@@ -37,6 +37,13 @@
     padding: 20px;
     border: 1px solid;
     border-radius: 20px;
+    height: max-content;
+}
+
+.active-filter1{
+    background-color: orange;
+    border-radius: 5px;
+    color: white;
 }
 
 .mnb {
@@ -76,6 +83,7 @@
     border-radius: 20px;
     background-color: transparent;
     text-transform: capitalize;
+    border: 1px solid #000;
 }
 
 .img-card {
@@ -205,6 +213,8 @@
 
 .active-filter {
     background-color: orange !important;
+    color: white;
+    border: 1px solid #000;
 }
 
 .pagination button.active {

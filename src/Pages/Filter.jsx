@@ -9,23 +9,27 @@ import ApiCall from '../GlobalConst/ApiCall'
 
 function Filter() {
 
-    const [min1, setmin] = useState();
+    const [min1, setmin] = useState(100000);
     const [max1, setmax] = useState();
     const [min2, setmin2] = useState();
     const [max2, setmax2] = useState();
 
     const [filterData, setFilterData] = useState()
-    console.log(filterData, "filterData")
 
     const sectorData = localStorage.getItem('sectorData');
     const areaData = localStorage.getItem('areaData');
     const cityData = localStorage.getItem('cityData');
 
     const [searchData, setsearchData] = useState([])
-    const [category, setCategory] = useState([]);
+    // const [category, setCategory] = useState([]);
     const [BHK, setBHK] = useState("")
     const [upperStatus, setUpperStatus] = useState("")
 
+    const shortData = (e) => {
+        let search = e.target.value;
+        let fData = searchData?.filter((item) => item?.area?.toLowerCase().indexOf(search?.toLowerCase()) !== -1)
+        setFilterData(fData);
+    }
 
     // ------------- get data --------------------
     const search = useCallback(() => {
@@ -33,11 +37,13 @@ function Filter() {
             area: sectorData.split(','),
             city: areaData.split(','),
             state: cityData.split(','),
+
         };
 
         ApiCall("post", apiConst.search, data, null, null)
             .then(function (response) {
                 setsearchData(response.data.property)
+                setFilterData(response.data.property)
             })
             .catch(function (error) {
                 console.log(error);
@@ -51,9 +57,8 @@ function Filter() {
 
     const indexOfLastProperty = currentPage * propertiesPerPage;
     const indexOfFirstProperty = indexOfLastProperty - propertiesPerPage;
-    // const currentProperties = lol?.slice(indexOfFirstProperty, indexOfLastProperty);
 
-    const totalPages = Math.ceil(searchData?.length / propertiesPerPage);
+    const totalPages = Math.ceil(filterData?.length / propertiesPerPage);
 
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -61,51 +66,34 @@ function Filter() {
     };
 
     useEffect(() => {
-        if (BHK !== "") {
-            let newData = searchData.filter((item) => item.bed === BHK);
-            return setFilterData(newData);
-        }
+        let tempFilterData = filterData
 
-        if (upperStatus !== "") {
-            let newData = searchData.filter((item) => item.property_status === upperStatus);
-            return setFilterData(newData);
+        if (upperStatus) {
+            tempFilterData = searchData?.filter((item) => (item.sale_price >= min1 && item.sale_price <= max1) && (item.property_size >= min2 && item.property_size <= max2) && item.property_status === upperStatus);
         }
-
-
-        if (min1 !== undefined && max1 !== undefined) {
-            console.log(min1, max1);
-            let newData = searchData.filter((item) => item.sale_price >= min1 && item.sale_price <= max1);
-            console.log(newData);
-            return setFilterData(newData);
+        else if (BHK) {
+            tempFilterData = searchData?.filter((item) => (item.sale_price >= min1 && item.sale_price <= max1) && (item.property_size >= min2 && item.property_size <= max2) && item.bed === BHK);
         }
-
-        if (min2 !== undefined && max2 !== undefined) {
-            let newData1 = searchData.filter((item) => (
-                Math.floor(item.property_size) >= min2 && Math.floor(item.property_size) <= max2
-            ));
-            console.log(newData1);
-            return setFilterData(newData1);
+        else {
+            tempFilterData = searchData?.filter((item) => (item.sale_price >= min1 && item.sale_price <= max1) && (item.property_size >= min2 && item.property_size <= max2));
         }
+        setFilterData(tempFilterData)
     }, [BHK, min1, max1, min2, max2, upperStatus])
 
     const onSearch = (min, max) => {
         setmin(min)
         setmax(max)
-        // let newData = searchData.filter((item) => item.sale_price >= min && item.sale_price <= max);
-        // setSlider(min, max);
     };
 
     const hello1 = (min, max) => {
         setmin2(min)
         setmax2(max)
-        // setSlider1(min, max)
-        // let newData = searchData.filter((item) => item.property_size >= min && item.property_size <= max);
-        // setsearchData(newData)
     };
 
-    const allBhk = (value) => {
-        // let newData = searchData.filter((item) => item.bed === value);
+    const [activeTag1, setActiveTag1] = useState();
+    const allBhk = (value, tabIndex1) => {
         setBHK(value)
+        setActiveTag1(tabIndex1);
     };
 
     const status = (value, tabIndex) => {
@@ -117,7 +105,7 @@ function Filter() {
     const allList = () => {
         ApiCall("get", apiConst.list, null, null, null)
             .then(function (response) {
-                setCategory(response.data.category)
+                // setCategory(response.data.category)
             })
             .catch(function (error) {
                 console.log(error);
@@ -130,12 +118,6 @@ function Filter() {
 
     const allsector = localStorage.getItem('sectorData').split(',');
     const [activeTag, setActiveTag] = useState();
-
-    const shortData = (e) => {
-        let search = e.target.value;
-        let fData = searchData?.filter((item) => item?.city?.toLowerCase().indexOf(search?.toLowerCase()) !== -1)
-        setFilterData(fData);
-    }
 
     useEffect(() => {
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -187,12 +169,12 @@ function Filter() {
                             <div>
                                 <span>Budget</span>
                                 <div className='min-max-flex'>
-                                    <h6 className='budget-btn'>{min1}L</h6>
-                                    <h6 className='budget-btn'>{max1}L</h6>
+                                    <h6 className='budget-btn'>₹{min1}</h6>
+                                    <h6 className='budget-btn'>₹{max1}</h6>
                                 </div>
                                 <div className='min-max'>
                                     <div className="inner-div">
-                                        <MultiRangeSlider min={0} max={100000000} onChange={onSearch} />
+                                        <MultiRangeSlider min={100000} max={100000000} onChange={onSearch} />
                                     </div>
                                 </div>
                             </div>
@@ -210,15 +192,11 @@ function Filter() {
                             <hr /> */}
                             <h6>No. of Bedrooms</h6>
                             <div className='bedrooms-btn'>
-                                <div
-                                    className={`bedroom-option ${activeTag === '1' ? 'active' : ''}`}
-                                    style={{ cursor: 'pointer' }}
-                                    onClick={() => allBhk('1')}
-                                >1BHK</div>
-                                <div style={{ cursor: "pointer" }} onClick={() => allBhk('2')}>2BHK</div>
-                                <div style={{ cursor: "pointer" }} onClick={() => allBhk('3')}>3BHK</div>
-                                <div style={{ cursor: "pointer" }} onClick={() => allBhk('4')}>4BHK</div>
-                                <div style={{ cursor: "pointer" }} onClick={() => allBhk('5')}>5BHK</div>
+                                <div className={activeTag1 === 0 ? 'active-filter1' : ''} style={{ cursor: "pointer" }} onClick={() => allBhk('1', 0)}>1BHK</div>
+                                <div className={activeTag1 === 1 ? 'active-filter1' : ''} style={{ cursor: "pointer" }} onClick={() => allBhk('2', 1)}>2BHK</div>
+                                <div className={activeTag1 === 2 ? 'active-filter1' : ''} style={{ cursor: "pointer" }} onClick={() => allBhk('3', 2)}>3BHK</div>
+                                <div className={activeTag1 === 3 ? 'active-filter1' : ''} style={{ cursor: "pointer" }} onClick={() => allBhk('4', 3)}>4BHK</div>
+                                <div className={activeTag1 === 4 ? 'active-filter1' : ''} style={{ cursor: "pointer" }} onClick={() => allBhk('5', 4)}>5BHK</div>
                             </div>
                             <hr />
                             {/* <h6>Posted by</h6>
@@ -253,12 +231,9 @@ function Filter() {
 
                         <div className='right-card'>
                             <div className='category-btn'>
-                                <button
-                                    className={activeTag === 0 ? 'active-filter' : ''}
-                                    onClick={() => status('All', 0)}
-                                >
+                                {/* <button className={activeTag === 0 ? 'active-filter' : ''} onClick={() => status('All', 0)}>
                                     all
-                                </button>
+                                </button> */}
                                 <button
                                     className={activeTag === 1 ? 'active-filter' : ''}
                                     onClick={() => status('Owner', 1)}
@@ -287,29 +262,12 @@ function Filter() {
 
                             <div>
                                 {
-                                    // filterData?.length === 0 ?
-                                    BHK === '' && upperStatus === '' && filterData?.slice(indexOfFirstProperty, indexOfLastProperty)?.map((property, index) => (
-                                        <PropertyCard key={index} property={property} />
-                                    ))
-                                    // : filterData?.slice(indexOfFirstProperty, indexOfLastProperty)?.map((property, index) => (
-                                    //     <PropertyCard key={index} property={property} />
-                                    // ))
+                                    filterData?.length === 0 ?
+                                        <div style={{ fontSize: "24px", textAlign: "center", color: "red", margin: "10px 0" }}>No Data</div> :
+                                        filterData?.slice(indexOfFirstProperty, indexOfLastProperty)?.map((property, index) => (
+                                            <PropertyCard key={index} property={property} />
+                                        ))
                                 }
-
-                                {/* {
-
-                                    searchData?.slice(indexOfFirstProperty, indexOfLastProperty)?.map((property, index) => (
-                                        <PropertyCard key={index} property={property} />
-                                    ))
-
-                                } */}
-
-                                {
-                                    (BHK !== '' && upperStatus !== '') && filterData?.map((property, index) => (
-                                        <PropertyCard key={index} property={property} />
-                                    ))
-                                }
-
 
                                 {/* Pagination */}
                                 <div className="pagination">
