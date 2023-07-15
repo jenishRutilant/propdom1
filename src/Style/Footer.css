@@ -15,12 +15,12 @@
   justify-content: space-between;
 }
 
-.Propdam-part :hover {
+.Propdam-part p:hover {
   color: orange;
   text-decoration: none;
 }
 
-.Company-part :hover {
+.Company-part p:hover {
   color: orange;
   text-decoration: none;
 }
@@ -190,9 +190,9 @@
   border-radius: 9px;
 }
 
-.model-box {
-  /* background-color: #ebeff4d7; */
-}
+/* .model-box {
+  background-color: #ebeff4d7;
+} */
 
 .btn-close {
   color: white;

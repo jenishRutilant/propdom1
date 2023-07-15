@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useEffect, useState } from 'react'
 import Navbar from '../Component/Navbar'
 import "../Style/Home.css"

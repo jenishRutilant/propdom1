@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import '../Style/Filter.css'
@@ -141,9 +142,9 @@ function Filter() {
                             <i className="fa-solid fa-magnifying-glass search-123"></i>
                         </div>
                         <div className="pokl">
-                            <li><Link to="/login">Login</Link></li>
-                            <li><Link to="/CustomerService">Customer Service</Link></li>
                             <li><Link to="/plans">Plans</Link></li>
+                            <li><Link to="/CustomerService">Customer Service</Link></li>
+                            <li><Link to="/login">Login</Link></li>
                             <li style={{ border: "none" }}><i className="orange fa-solid fa-bell"></i></li>
                         </div>
                     </ul>
@@ -159,7 +160,7 @@ function Filter() {
                         <div className='sidebar'>
                             <div className='flex justify-content align-items'>
                                 <h6 className='a-f'>Applied Filters</h6>
-                                <Link to="#" onClick={onClick}>clear all</Link>
+                                <Link to="#" onClick={onClick}>Clear All</Link>
                             </div>
                             {allsector?.map((item, index) => (
                                 <div key={index}>

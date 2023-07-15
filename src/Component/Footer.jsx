@@ -241,7 +241,7 @@ const Footer = () => {
             <div className="Contact-us-part">
               <h3 className="p-h3">Contact Us</h3>
               <p>Toll Free - 0000 41 9909</p>
-              <p>Email: Info@propdam.com</p>
+              <p>Email: Info@landdam.com</p>
               <img className="play-f-img" src={a1} alt="" /> <br />
               <img className="play-f-img" src={a2} alt="" />
               <p>
@@ -281,7 +281,7 @@ const Footer = () => {
             <div className="modal-dialog ">
               <div className="modal-content  model-box">
                 <div className="modal-header">
-                  <h1 className="modal-title fs-5" id="exampleModalLabel"><h6 className="footer-model-title">{FieldValue.title}</h6></h1>
+                  <h1 className="modal-title fs-5" id="exampleModalLabel"><h4 className="footer-model-title">{FieldValue.title}</h4></h1>
                   <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
                 </div>
                 <div className="modal-body">

@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:5000/";
+const BASE_URL = "http://67.205.176.136:4000/";
 
 // const GET = "get";
 // const POST = "post";
@@ -19,6 +19,10 @@ const apiConst = {
   askquery: `${BASE_URL}supportManagement/sendEnquiries`,
   addSlider: `${BASE_URL}slider/addSlider`,
   checkisSubscribed: `${BASE_URL}agent/checkisSubscribed/`,
+  add_property: `${BASE_URL}property/addProperty`,
+  add_sub_property: `${BASE_URL}property/addSubProperty`,
+  view_property: `${BASE_URL}property/listSubProperty`,
+  addProperty: `${BASE_URL}tempProp/addProperty`,
 };
 
 export default apiConst;

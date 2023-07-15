@@ -64,7 +64,10 @@ const Navbar = () => {
                         {!userdata ? (
                             <></>
                         ) : (
-                            <button type="button" className="btn p-2 btn-warning" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Ask Query</button>
+                            <>
+                                <button type="button" className="btn p-2 btn-warning" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Ask Query</button>
+                                <Link to="/propertyCard"><button type="button" className="btn p-2 btn-warning" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Post</button></Link>
+                            </>
                         )}
                     </ul>
                     <Link style={{ zIndex: "0" }} to='/'><img src={require("../Assets/R.png")} alt="" className="logo123" /></Link>
