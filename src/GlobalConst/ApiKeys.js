@@ -1,4 +1,4 @@
-const BASE_URL = "http://67.205.176.136:4000/";
+const BASE_URL = 'http://localhost:4000/'
 
 // const GET = "get";
 // const POST = "post";

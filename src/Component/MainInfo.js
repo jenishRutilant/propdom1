@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 
@@ -51,7 +51,7 @@ function MainInfo({ handleNextCard, subPropertyType, getPropertyDetails }) {
             className="input-fields"
           >
             <TextField
-              className="m-0 fields"
+              className="m-0 mt-2 fields"
               id="outlined-basic"
               label="Measurment"
               variant="outlined"
@@ -59,7 +59,7 @@ function MainInfo({ handleNextCard, subPropertyType, getPropertyDetails }) {
               onChange={getPropertyDetails}
             />
             <TextField
-              className="m-0 ms-2 fields"
+              className="m-0 mt-2 ms-2  fields"
               id="outlined-basic"
               label="Total Size"
               variant="outlined"
@@ -67,7 +67,7 @@ function MainInfo({ handleNextCard, subPropertyType, getPropertyDetails }) {
               onChange={getPropertyDetails}
             />
             <TextField
-              className="m-0 mt-2 fields"
+              className="m-0 mt-2  fields"
               id="outlined-basic"
               label="Use Area"
               variant="outlined"
@@ -75,7 +75,7 @@ function MainInfo({ handleNextCard, subPropertyType, getPropertyDetails }) {
               onChange={getPropertyDetails}
             />
             <TextField
-              className="m-0 ms-2 fields"
+              className="m-0 mt-2 ms-2 fields"
               id="outlined-basic"
               label="Open Area"
               variant="outlined"
@@ -83,7 +83,7 @@ function MainInfo({ handleNextCard, subPropertyType, getPropertyDetails }) {
               onChange={getPropertyDetails}
             />
             <TextField
-              className="m-0 mt-2 fields"
+              className="m-0 mt-2  fields"
               id="outlined-basic"
               label="Cover Area"
               variant="outlined"
@@ -96,7 +96,6 @@ function MainInfo({ handleNextCard, subPropertyType, getPropertyDetails }) {
           </div>
         </>
       )}
-
       {subPropertyType === "hotel" && (
         <>
           <div className="mt-4">
@@ -146,7 +145,6 @@ function MainInfo({ handleNextCard, subPropertyType, getPropertyDetails }) {
           </div>
         </>
       )}
-
       {subPropertyType === "factory" && (
         <>
           <div className="d-flex gap-3 mt-4">
@@ -208,7 +206,6 @@ function MainInfo({ handleNextCard, subPropertyType, getPropertyDetails }) {
           </div>
         </>
       )}
-
       {/*------------------------------------- Residentail ------------------------------------- */}
       {subPropertyType === "flat/apartment" && (
         <>
@@ -281,7 +278,6 @@ function MainInfo({ handleNextCard, subPropertyType, getPropertyDetails }) {
           </div>
         </>
       )}
-
       {(subPropertyType === "independent floor" ||
         subPropertyType === "villa" ||
         subPropertyType === "farmhouse" ||

@@ -1,6 +1,5 @@
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-
 function ProInternalInfo({
   handleNextCard,
   subPropertyType,
@@ -10,11 +9,7 @@ function ProInternalInfo({
     <>
       {/*------------------------------------- Commercial ------------------------------------- */}
       {subPropertyType === "banquet halls" && (
-        <div
-          className="col-lg-4 col-md-6 col-sm-12"
-          id="internal_info"
-          style={{ display: "none" }}
-        >
+        <div className="col-lg-4 col-md-6 col-sm-12">
           <div className="card-body">
             <h3 className="mb-4">Property Internal Information</h3>
             <Box
@@ -34,7 +29,7 @@ function ProInternalInfo({
                 style={{ width: "100%", margin: "0", marginTop: "0px" }}
               />
               <div
-                className="selcet-option m-0 mt-3"
+                className="select-option m-0 mt-3"
                 style={{ width: "fit-content" }}
               >
                 <select
@@ -44,7 +39,7 @@ function ProInternalInfo({
                   aria-label=".form-select-lg example"
                 >
                   <option disabled selected>
-                    Main Road Facing
+                    Main Road
                   </option>
                   <option value="yes">Yes</option>
                   <option value="no">No</option>
@@ -178,13 +173,8 @@ function ProInternalInfo({
           </div>
         </div>
       )}
-
       {subPropertyType === "plots" && (
-        <div
-          className="col-lg-4 col-md-6 col-sm-12"
-          id="internal_info"
-          style={{ display: "none" }}
-        >
+        <div className="col-lg-4 col-md-6 col-sm-12">
           <div className="card-body">
             <h3 className="mb-4">Property Internal Information</h3>
             <Box
@@ -287,11 +277,7 @@ function ProInternalInfo({
       )}
 
       {subPropertyType === "shop" && (
-        <div
-          className="col-lg-4 col-md-6 col-sm-12"
-          id="internal_info"
-          style={{ display: "none" }}
-        >
+        <div className="col-lg-4 col-md-6 col-sm-12">
           <div className="card-body">
             <h3 className="mb-4">Property Internal Information</h3>
             <Box
@@ -412,13 +398,8 @@ function ProInternalInfo({
           </div>
         </div>
       )}
-
       {(subPropertyType === "retail" || subPropertyType === "office") && (
-        <div
-          className="col-lg-4 col-md-6 col-sm-12"
-          id="internal_info"
-          style={{ display: "none" }}
-        >
+        <div className="col-lg-4 col-md-6 col-sm-12">
           <div className="card-body">
             <h3 className="mb-4">Property Internal Information</h3>
             <Box
@@ -437,7 +418,10 @@ function ProInternalInfo({
                 variant="outlined"
                 style={{ width: "100%", margin: "0", marginTop: "0px" }}
               />
-              <div className=" m-0 mt-3" style={{ width: "fit-content" }}>
+              <div
+                className="select-option m-0 mt-3"
+                style={{ width: "fit-content" }}
+              >
                 <select
                   name="p_mainRoadFacing"
                   onChange={getPropertyDetails}
@@ -445,7 +429,7 @@ function ProInternalInfo({
                   aria-label=".form-select-lg example"
                 >
                   <option disabled selected>
-                    Main Road Facing
+                    Main Road
                   </option>
                   <option value="yes">Yes</option>
                   <option value="no">No</option>
@@ -593,11 +577,7 @@ function ProInternalInfo({
 
       {/*------------------------------------- Residentail ------------------------------------- */}
       {subPropertyType === "flat/apartment" && (
-        <div
-          className="col-lg-4 col-md-6 col-sm-12"
-          id="internal_info"
-          style={{ display: "none" }}
-        >
+        <div className="col-lg-4 col-md-6 col-sm-12">
           <div className="card-body">
             <h3 className="mb-4">Property Internal Information</h3>
             <Box
@@ -770,15 +750,10 @@ function ProInternalInfo({
           </div>
         </div>
       )}
-
       {(subPropertyType === "independent floor" ||
         subPropertyType === "villa" ||
         subPropertyType === "farmhouse") && (
-        <div
-          className="col-lg-4 col-md-6 col-sm-12"
-          id="internal_info"
-          style={{ display: "none" }}
-        >
+        <div className="col-lg-4 col-md-6 col-sm-12">
           <div className="card-body">
             <h3 className="mb-4">Property Internal Information</h3>
             <Box
@@ -797,7 +772,10 @@ function ProInternalInfo({
                 variant="outlined"
                 style={{ width: "100%", margin: "0", marginTop: "0px" }}
               />
-              <div className=" m-0 mt-3" style={{ width: "fit-content" }}>
+              <div
+                className="select-option m-0 mt-3"
+                style={{ width: "fit-content" }}
+              >
                 <select
                   name="p_mainRoadFacing"
                   onChange={getPropertyDetails}
@@ -805,7 +783,7 @@ function ProInternalInfo({
                   aria-label=".form-select-lg example"
                 >
                   <option disabled selected>
-                    Main Road Facing
+                    Main Road
                   </option>
                   <option value="yes">Yes</option>
                   <option value="no">No</option>
@@ -917,11 +895,7 @@ function ProInternalInfo({
       )}
 
       {subPropertyType === "plot" && (
-        <div
-          className="col-lg-4 col-md-6 col-sm-12"
-          id="internal_info"
-          style={{ display: "none" }}
-        >
+        <div className="col-lg-4 col-md-6 col-sm-12">
           <div className="card-body">
             <h3 className="mb-4">Property Internal Information</h3>
             <Box
@@ -940,7 +914,10 @@ function ProInternalInfo({
                 variant="outlined"
                 style={{ width: "100%", margin: "0", marginTop: "0px" }}
               />
-              <div className=" m-0 mt-3" style={{ width: "fit-content" }}>
+              <div
+                className="select-option m-0 mt-3"
+                style={{ width: "fit-content" }}
+              >
                 <select
                   name="p_mainRoadFacing"
                   onChange={getPropertyDetails}
@@ -948,7 +925,7 @@ function ProInternalInfo({
                   aria-label=".form-select-lg example"
                 >
                   <option disabled selected>
-                    Main Road Facing
+                    Main Road
                   </option>
                   <option value="yes">Yes</option>
                   <option value="no">No</option>
@@ -1037,5 +1014,4 @@ function ProInternalInfo({
     </>
   );
 }
-
 export default ProInternalInfo;

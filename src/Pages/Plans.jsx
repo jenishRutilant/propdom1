@@ -4,6 +4,7 @@ import "../Style/Plans.css";
 import Footer from "../Component/Footer";
 import axios from "axios"
 import apiConst from "../GlobalConst/ApiKeys";
+import { useNavigate } from "react-router";
 
 const Plans = () => {
 
@@ -37,6 +38,17 @@ const Plans = () => {
       });
   }
 
+  const navi = useNavigate();
+  const onSubmit = () => {
+    if (!localStorage.getItem('User_token')) {
+      alert('Please login first.');
+      navi("/login");
+    }
+    else {
+      alert('Submit')
+    }
+  }
+
   return (
     <>
       <Navbar />
@@ -66,7 +78,7 @@ const Plans = () => {
                 <p>Has Profile : Yes</p> <hr />
                 <p>Live Property View : No</p> <hr />
               </div>
-              <button>BUY NOW</button>
+              <button onClick={onSubmit}>BUY NOW</button>
             </div>
 
             <div className="card">
@@ -90,7 +102,7 @@ const Plans = () => {
                 <p>Has Profile : Yes</p> <hr />
                 <p>Live Property View : No</p> <hr />
               </div>
-              <button>BUY NOW</button>
+              <button onClick={onSubmit}>BUY NOW</button>
             </div>
 
             <div className="card">
@@ -114,7 +126,7 @@ const Plans = () => {
                 <p>Has Profile : Yes</p> <hr />
                 <p>Live Property View : No</p> <hr />
               </div>
-              <button>BUY NOW</button>
+              <button onClick={onSubmit}>BUY NOW</button>
             </div>
 
 

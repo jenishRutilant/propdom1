@@ -15,9 +15,9 @@ const makeAPIRequest = async (method, url, data, headers, params) =>
         if (headers) {
             options.headers = { ...options.headers, ...headers };
         }
+        console.log("🚀 ~ file: apiCall.js:13 ~ .then ~ response:", options)
         axios(options)
             .then(async (response) => {
-                // console.log("🚀 ~ file: apiCall.js:13 ~ .then ~ response:", response)
                 if (response?.status === 200 || response?.status === 201) {
                     resolve(response);
                 } else {

@@ -41,7 +41,7 @@ const Footer = () => {
         ...prevState,
         title: "Terms & Conditions",
         img: p1,
-        description: "Welcome to our Terms & Conditions page, where you can find a detailed description of the guidelines and agreements that govern your use of our propdam website and services."
+        description: "Welcome to our Terms & Conditions page, where you can find a detailed description of the guidelines and agreements that govern your use of our landdom website and services."
       }));
     } else if (title === 'RI') {
       setFieldValue(prevState => ({
@@ -105,7 +105,7 @@ const Footer = () => {
         ...prevState,
         title: "Mobile Apps",
         img: p1,
-        description: "This is a description of our mobile app, designed to provide convenient access to our propdam services, empowering users to report and track property damage with ease."
+        description: "This is a description of our mobile app, designed to provide convenient access to our landdom services, empowering users to report and track property damage with ease."
       }));
     }
     else if (title === 'UR') {
@@ -161,7 +161,7 @@ const Footer = () => {
         ...prevState,
         title: "Sitemap",
         img: p1,
-        description: "This is a description of our Sitemap, a comprehensive guide that navigates you through our propdam website, ensuring easy access to all relevant information and services."
+        description: "This is a description of our Sitemap, a comprehensive guide that navigates you through our landdom website, ensuring easy access to all relevant information and services."
       }));
     }
     else {
@@ -213,7 +213,7 @@ const Footer = () => {
           {/* footer inner part */}
           <div className="inner-info container-fluid">
             <div className="Propdam-part">
-              <h3 className="p-h3">Propdam</h3>
+              <h3 className="p-h3">landdom</h3>
               <p onClick={() => LonchModel('MA')}>Mobile Apps</p>
               <p onClick={() => LonchModel('UR')}>Our Services</p>
               <p onClick={() => LonchModel('PT')}>Price Trends</p>

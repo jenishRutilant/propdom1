@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import makeAPIRequest from '../global/apiCall';
 import API_CONST from '../global/apiKey';
-import './PropertyCard.css'
+import '../Style/PropertyCard.css'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import axios from 'axios';
 
 function ProListing() {
     const [propertyData, setPropertyData] = useState([])

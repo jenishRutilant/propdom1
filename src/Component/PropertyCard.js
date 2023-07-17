@@ -1,7 +1,6 @@
-/* eslint-disable */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import makeAPIRequest from "../GlobalConst/apiCalls";
-import apiConst from "../GlobalConst/ApiKeys";
+import API_CONST from "../GlobalConst/apiKey";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -11,7 +10,8 @@ import BasicInfo from "./BasicInfo";
 import ProInternalInfo from "./ProInternalInfo";
 import OwnerInfo from "./OwnerInfo";
 import ProAddress from "./ProAddress";
-import "../Style/PropertyCard.css";
+import '../Style/PropertyCard.css'
+
 
 function PropertyCard() {
   const [propertyPurpose, setPropertyPurpose] = useState("sell");
@@ -68,81 +68,86 @@ function PropertyCard() {
     p_longitude: "",
     p_reMarkes: "",
   });
-
+  const [a, setA] = useState(false);
+  const [b, setB] = useState(false);
+  const [c, setC] = useState(false);
+  const [d, setD] = useState(false);
+  const [e, setE] = useState(false);
   // Get List Of Sub Property Type
   useEffect(() => {
     makeAPIRequest(
       "get",
-      `${apiConst.view_property}?type=${propertyType}`,
+      `${API_CONST.view_property}?type=${propertyType}`,
       null,
       null,
       null
     )
       .then((response) => {
-        // console.log("🚀 ~ file: PropertyCard.js:28 ~ .then ~ response:", response)
+        // console.log(":rocket: ~ file: PropertyCard.js:28 ~ .then ~ response:", response)
         setPropertyData(response.data.data);
       })
       .catch(async (error) => {
         console.log(error);
       });
-  }, [makeAPIRequest]);
-
+  }, []);
   // Set backgroundColor of activeTag
   const handleClick = (tagIndex, purpose) => {
     setActiveTag(tagIndex);
     setPropertyPurpose(purpose);
   };
-
   // Get List Of Sub Property Type when setPropertyType change
   const handleChange = (event) => {
     setPropertyType(event.target.value);
     makeAPIRequest(
       "get",
-      `${apiConst.view_property}?type=${event.target.value}`,
+      `${API_CONST.view_property}?type=${event.target.value}`,
       null,
       null,
       null
     )
       .then((response) => {
         setPropertyData(response.data.data);
+        setA(false);
+        setB(false);
+        setC(false);
+        setD(false);
+        setE(false);
       })
       .catch(async (error) => {
         console.log(error);
       });
   };
-
   // Show Sub Property
   const showInputFields = (index, subPropertyType) => {
     setSubPropertyType(subPropertyType);
-    if (cardCount !== 1) {
-      setCardCount(0);
-      document.getElementById(`basic_info`).style.display = "none";
-      document.getElementById("internal_info").style.display = "none";
-      document.getElementById("owner_info").style.display = "none";
-      document.getElementById("address_info").style.display = "none";
+    setA(true);
+    if (cardCount != 1) {
+      setCardCount(1);
+      setB(false);
+      setC(false);
+      setD(false);
+      setE(false);
     }
   };
-
   // Show Next Card
   const handleNextCard = () => {
     setCardCount(cardCount + 1);
     if (cardCount === 1) {
-      document.getElementById(`basic_info`).style.display = "block";
+      setB(true);
     } else if (cardCount === 2) {
-      if (subPropertyType !== "hotel") {
-        document.getElementById("internal_info").style.display = "block";
+      if (subPropertyType != "hotel" || subPropertyType != "factory") {
+        setC(true);
       }
     } else if (cardCount === 3) {
-      if (subPropertyType !== "hotel") {
-        document.getElementById("owner_info").style.display = "block";
+      if (subPropertyType != "hotel" || subPropertyType != "factory") {
+        setD(true);
       }
     } else if (cardCount === 4) {
-      if (subPropertyType !== "hotel") {
-        document.getElementById("address_info").style.display = "block";
+      if (subPropertyType != "hotel" || subPropertyType != "factory") {
+        setE(true);
       }
     }
   };
-
   // Get All Information Of Property
   const getPropertyDetails = (event) => {
     setPropertyInfo({
@@ -150,32 +155,30 @@ function PropertyCard() {
       [event.target.name]: event.target.value,
     });
   };
-
   // Property Data Submit
   const formSubmit = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     const allPropertyInfo = {
       ...propertyInfo,
       propertyPurpose,
       propertyType,
       subPropertyType,
     };
+    console.log(allPropertyInfo);
     const formData = new FormData();
     formData.append("image", image);
     formData.append("allPropertyInfo", JSON.stringify(allPropertyInfo));
-
-    makeAPIRequest("post", apiConst.addProperty, formData, null, null)
+    makeAPIRequest("post", API_CONST.create_property_data, formData, null, null)
       .then((response) => {
         console.log(response.data);
-        if (response.status === 200) {
-          window.location.reload();
+        if (response.status == 200) {
+          alert("Success")
         }
       })
       .catch((error) => {
         console.log(error);
       });
   };
-
   return (
     <>
       <div className="card-main-body">
@@ -243,41 +246,51 @@ function PropertyCard() {
                       );
                     })}
                   </div>
-                  <MainInfo
-                    handleNextCard={handleNextCard}
-                    subPropertyType={subPropertyType}
-                    getPropertyDetails={getPropertyDetails}
-                  />
+                  {a && (
+                    <MainInfo
+                      handleNextCard={handleNextCard}
+                      subPropertyType={subPropertyType}
+                      getPropertyDetails={getPropertyDetails}
+                    />
+                  )}
                 </div>
               </div>
             </div>
-            <BasicInfo
-              handleNextCard={handleNextCard}
-              subPropertyType={subPropertyType}
-              getPropertyDetails={getPropertyDetails}
-              image={setImage}
-            />
-            <ProInternalInfo
-              handleNextCard={handleNextCard}
-              subPropertyType={subPropertyType}
-              getPropertyDetails={getPropertyDetails}
-            />
-            <OwnerInfo
-              handleNextCard={handleNextCard}
-              subPropertyType={subPropertyType}
-              getPropertyDetails={getPropertyDetails}
-            />
-            <ProAddress
-              handleNextCard={handleNextCard}
-              subPropertyType={subPropertyType}
-              getPropertyDetails={getPropertyDetails}
-              formSubmit={formSubmit}
-            />
+            {b && (
+              <BasicInfo
+                handleNextCard={handleNextCard}
+                subPropertyType={subPropertyType}
+                getPropertyDetails={getPropertyDetails}
+                image={setImage}
+                formSubmit={formSubmit}
+              />
+            )}
+            {c && (
+              <ProInternalInfo
+                handleNextCard={handleNextCard}
+                subPropertyType={subPropertyType}
+                getPropertyDetails={getPropertyDetails}
+              />
+            )}
+            {d && (
+              <OwnerInfo
+                handleNextCard={handleNextCard}
+                subPropertyType={subPropertyType}
+                getPropertyDetails={getPropertyDetails}
+              />
+            )}
+            {e && (
+              <ProAddress
+                handleNextCard={handleNextCard}
+                subPropertyType={subPropertyType}
+                getPropertyDetails={getPropertyDetails}
+                formSubmit={formSubmit}
+              />
+            )}
           </div>
         </div>
       </div>
     </>
   );
 }
-
 export default PropertyCard;

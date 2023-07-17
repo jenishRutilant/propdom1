@@ -130,7 +130,7 @@ function Register() {
                 if (response.data.authtoken) {
                     localStorage.setItem('User_token', response.data.authtoken);
                     alert('Register done!')
-                    navigate('/login');
+                    navigate('/');
                 }
             })
             .catch((error) => {
