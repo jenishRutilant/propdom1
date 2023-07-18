@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:4000'
+const API_URL = "https://squid-app-f7425.ondigitalocean.app"
 
 const API_CONST = {
     add_property: `${API_URL}/property/addProperty`,

@@ -123,6 +123,7 @@ const Login = () => {
         if (response.data.authtoken) {
           localStorage.setItem('User_token', response.data.authtoken);
           alert('Login successful')
+          window.location.href = "/";
         }
       })
       .catch((error) => {

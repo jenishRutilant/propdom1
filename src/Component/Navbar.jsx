@@ -17,8 +17,6 @@ const Navbar = () => {
     }
     const addMessage = (e) => {
         // e.preventDefault();
-
-
         var data = JSON.stringify({
             "description": QueryAsk.message
         });
@@ -33,8 +31,6 @@ const Navbar = () => {
             },
             data: data
         };
-        // alert(config.data)
-        console.log(QueryAsk);
 
         axios(config)
             .then(function (response) {
@@ -45,6 +41,12 @@ const Navbar = () => {
             .catch(function (error) {
                 console.log(error);
             });
+    }
+
+    const User_token = localStorage.getItem('User_token');
+
+    const logout = () => {
+        localStorage.clear("User_token");
     }
 
     return (
@@ -60,7 +62,7 @@ const Navbar = () => {
                     <ul className="menu-items">
                         <NavLink to="/plans" className={({ isActive }) => (isActive ? "active" : 'none')}><li>Plans</li></NavLink>
                         <NavLink to="/CustomerService" className={({ isActive }) => (isActive ? "active" : 'none')}><li>Customer Service</li></NavLink>
-                        <NavLink to="/login" className={({ isActive }) => (isActive ? "active" : 'none')}><li>Login</li></NavLink>
+                        <NavLink to="/login" className={({ isActive }) => (isActive ? "active" : 'none')}><li>{!User_token ? "Login" : "Logout"}</li></NavLink>
                         {!userdata ? (
                             <></>
                         ) : (
