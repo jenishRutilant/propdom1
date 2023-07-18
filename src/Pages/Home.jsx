@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios'
 import apiConst from '../GlobalConst/ApiKeys'
 import ApiCall from '../GlobalConst/ApiCall'
+import { useNavigate, Link } from "react-router-dom";
 
 const Home = () => {
 
@@ -19,6 +20,8 @@ const Home = () => {
     allthelist();
     slider();
   }, []);
+
+  const navi = useNavigate();
 
   const [activeTag, setActiveTag] = useState();
   const [category, setCategory] = useState([]);
@@ -129,7 +132,10 @@ const Home = () => {
   const filterPage = async (e) => {
     e.preventDefault();
     saveDataToLocalStorage();
-    window.location.href = "/filter"
+    // window.location.href = window.location.href + "filter"
+    navi('/filter')
+    // return <Link to='/register'></Link>
+
   }
 
   return (

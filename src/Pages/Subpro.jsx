@@ -3,6 +3,7 @@ import '../Style/Subpro.css';
 import Navbar from '../Component/Navbar2';
 import Footer from '../Component/Footer';
 import bedroom from "../Assets/badroom.jpeg"
+import { BASE_URL } from '../GlobalConst/ApiKeys';
 
 function Subpro() {
 
@@ -42,7 +43,7 @@ function Subpro() {
                 <div className='img-area'>
                     <div className='img-box'>
                         {/* <img src={id1.image_link === null ? { bedroom } : id1.image_link} alt="" className='img-fluid' /> */}
-                        {id1.image_link ? <img src={`http://localhost:5000/${id1.image_link}`} alt="" className='img-fluid' /> : <img src={bedroom} alt="" className='img-fluid' />}
+                        {id1.image_link ? <img src={`${BASE_URL}${id1.image_link}`} alt="" className='img-fluid' /> : <img src={bedroom} alt="" className='img-fluid' />}
                     </div>
                     <div>
                         <h1>{id1.propertyName}</h1>

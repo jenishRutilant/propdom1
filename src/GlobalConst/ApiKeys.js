@@ -1,4 +1,4 @@
-const BASE_URL = "https://squid-app-f7425.ondigitalocean.app"
+export const BASE_URL = "https://squid-app-f7425.ondigitalocean.app/"
 
 // const GET = "get";
 // const POST = "post";

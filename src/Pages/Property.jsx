@@ -14,7 +14,7 @@ const Property = ({ property }) => {
     const onId = (id) => {
         sessionStorage.setItem('image_link', JSON.stringify(id))
         console.log(id);
-        // navi("/subpro")
+        navi("/subpro")
     }
 
     const [contact, setcontact] = useState("Contact Delader")
